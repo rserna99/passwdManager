@@ -16,6 +16,8 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/c5c009e5a9.js" crossorigin="anonymous"></script>
 
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -71,8 +73,6 @@
                 echo "<h1>Error 404: Pagina no valida</h1>";
 
         }
-    } else {
-        include "Vista\paginas\\registro.php";
     }
 
     ?>

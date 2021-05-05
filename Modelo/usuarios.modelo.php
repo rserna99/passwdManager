@@ -36,15 +36,31 @@ Class usuariosModelo{
 
 
 
-    static public function mdlObtenerUsuarios(){
+    static public function mdlObtenerUsuarios($email){
 
-        $consulta = Conexion::conectar()->prepare(
-            "SELECT * FROM usuarios"
-        );
+        if ($email == null) {
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM usuarios"
+            );
 
-        $consulta->execute();
-        
-        return $consulta->fechAll();
+            $consulta->execute();
+
+            $resultado = $consulta->fetchAll();
+
+            return $resultado;
+        }
+        else {
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM usuarios WHERE email = :email"
+            );
+            $consulta->bindParam(":email", $email);
+
+            $consulta->execute();
+
+            $resultado = $consulta->fetch();
+
+            return $resultado;
+        }
 
         $consulta->close();
         $consulta = null;

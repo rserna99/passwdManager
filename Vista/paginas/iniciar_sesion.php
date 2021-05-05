@@ -1,7 +1,7 @@
 <h2>Iniciar sesión</h2>
 <hr style="width: 98%;"><br>
 
-<form action="">
+<form method="post">
     <div class="row">
         <label class="col-sm-4" for="email">Correo electrónico: </label>
         <input class="col-sm-8" type="email" name="email" id="email">
@@ -17,7 +17,16 @@
         <label class="col-4" for="recordar">Recordar usuario </label>
     </div>
     <br>
+
+    <?php
+
+    require "Controlador/usuarios.controlador.php";
+
+    $inicioSesion = new ControladorUsuarios();
+    $inicioSesion -> ctrIniciarSesion();
+    ?>
+
     <div class="row">
-        <button class="btn btn-primary col-sm-2 offset-sm-5" type="button">Enviar</button>
+        <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit">Iniciar sesión</button>
     </div>
 </form>

@@ -4,7 +4,7 @@
 <form method="post">
     <div class="row">
         <label class="col-sm-4" for="nombre">Nombre: </label>
-        <input class="col-sm-8" type="text" name="nombreRegistro" id="nombre">
+        <input class="col-sm-8" type="text" name="nombreRegistro" id="nombre" onblur="">
     </div>
     <br>
     <div class="row">
@@ -18,11 +18,10 @@
     </div>
     <br>
     <div class="row">
-        <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit">Enviar</button>
+        <button class="btn btn-primary col-sm-2 offset-sm-5 disabled" type="submit" id="btnEnvio">Enviar</button>
     </div>
 </form>
 <br>
-
 
 
 
