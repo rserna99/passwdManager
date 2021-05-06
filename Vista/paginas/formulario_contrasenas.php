@@ -56,14 +56,10 @@ if ($registro){
             window.history.replaceState(null, null, window.location.href);
         }
     </script>";
-    echo '<div class="alert alert-success" role="alert">Contraseña almacenada</div>';
+    //echo '<div class="alert alert-success" role="alert">Contraseña almacenada</div>';
+    echo '<script>window.location = "index.php?pagina=contrasenas"</script>';
 }
-else{
-    echo '<div class="alert alert-danger" role="alert">
-            <p>No se ha guardado la contraseña</p>
-            <p>print_r($registro)</p>
-          </div>';
-}
+else
 
 
 ?>
