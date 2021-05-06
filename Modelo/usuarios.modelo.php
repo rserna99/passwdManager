@@ -22,21 +22,22 @@ Class usuariosModelo{
 
         if ($consulta->execute()) 
         {
-            
+
             return true;
         }
         else {
             
-            print_r(Conexion::conectar()->errorInfo());
+            //print_r(Conexion::conectar()->errorInfo());
             $consulta->close();
             $consulta = null;
+            return Conexion::conectar()->errorInfo();
         }
 
     }
 
 
 
-    static public function mdlObtenerUsuarios($email){
+    static public function mdlObtenerUsuarios($email = null){
 
         if ($email == null) {
             $consulta = Conexion::conectar()->prepare(

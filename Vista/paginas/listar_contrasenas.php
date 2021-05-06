@@ -13,6 +13,13 @@ else{
 
 ?>
 
+<h2>Listado de contraseñas</h2>
+<hr style="width: 98%">
+<br>
+
+<a href="index.php?pagina=nueva_contrasena"><button class="btn btn-primary">Crear nueva contraseña</button></a>
+<br>
+<br>
 <table class="table table-striped">
     <thead>
     <tr>

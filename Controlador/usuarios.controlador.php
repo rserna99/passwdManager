@@ -21,7 +21,7 @@ class ControladorUsuarios{
 
     }
 
-    public static function ctrObtenerUsuarios(){
+    public static function ctrListarUsuarios(){
 
         $resultado = usuariosModelo::mdlObtenerUsuarios(null);
 

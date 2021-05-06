@@ -18,7 +18,7 @@
     </div>
     <br>
     <div class="row">
-        <button class="btn btn-primary col-sm-2 offset-sm-5 disabled" type="submit" id="btnEnvio">Enviar</button>
+        <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Enviar</button>
     </div>
 </form>
 <br>
