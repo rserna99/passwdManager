@@ -27,7 +27,6 @@ Class contrasenasModelo{
             $consulta = null;
             return Conexion::conectar()->errorInfo();
         }
-
     }
 
     static public function mdlObtenerContrasenas($idContrasena = null){
@@ -66,5 +65,30 @@ Class contrasenasModelo{
         $consulta->close();
         $consulta = null;
 
+    }
+
+    public static function mdlModificarContrasena(array $datos)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "UPDATE contrasenas SET servicio= :servicio ,url= :url ,usuario= :usuario ,contrasena= :contrasena WHERE id = :id"
+        );
+
+        $consulta->bindParam(":id", $datos["id"]);
+        $consulta->bindParam(":servicio", $datos["servicio"]);
+        $consulta->bindParam(":url", $datos["url"]);
+        $consulta->bindParam(":usuario", $datos["usuario"]);
+        $consulta->bindParam(":contrasena", $datos["contrasena"]);
+
+        if ($consulta->execute())
+        {
+
+            return true;
+        }
+        else {
+
+            $consulta->close();
+            $consulta = null;
+            return Conexion::conectar()->errorInfo();
+        }
     }
 }

@@ -43,9 +43,15 @@ if (isset($_GET["id"])){
             <label class="col-sm-4" for="contrasena">Contraseña: </label>
             <input class="col-sm-8" type="password" value="<?php echo $contrasena[0]["contrasena"]; ?>" name="contrasena" id="contrasena">
         </div>
+        <input type="hidden" value="<?php echo $contrasena[0]["id"]; ?>" name="idContrasena">
         <br>
         <div class="row">
             <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Actualizar contraseña</button>
         </div>
     </form>
     <br>
+<?php
+
+$contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario"]);
+
+$actualizar = ControladorContrasenas::ctrModificarContrasena();

@@ -15,6 +15,8 @@ require "Controlador/contrasenas.controlador.php";
 
 $contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario"]);
 
+$actualizar = ControladorContrasenas::ctrModificarContrasena();
+
 ?>
 
 <h2>Listado de contraseñas</h2>
