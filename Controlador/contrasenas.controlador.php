@@ -20,9 +20,9 @@ class ControladorContrasenas{
         }
     }
 
-    public static function ctrListarContrasenas(){
+    public static function ctrListarContrasenas($idContrasena = null){
 
-        $resultado = contrasenasModelo::mdlObtenerContrasenas();
+        $resultado = contrasenasModelo::mdlObtenerContrasenas($idContrasena);
 
         return $resultado;
 

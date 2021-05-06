@@ -21,7 +21,7 @@ $contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario
 <hr style="width: 98%">
 <br>
 
-<a href="index.php?pagina=nueva_contrasena"><button class="btn btn-primary">Crear nueva contraseña</button></a>
+<a class="btn btn-primary" href="index.php?pagina=nueva_contrasena">Crear nueva contraseña</a>
 <br>
 <br>
 <table class="table table-striped">
@@ -50,8 +50,8 @@ $contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario
             </td>
             <td>
                 <div class="btn-group">
-                    <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                    <a href="index.php?pagina=editar_contrasena&id=<?php echo $value["id"]?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    <a href="index.php?pagina=borrar_contrasena&id=<?php echo $value["id"]?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                 </div>
             </td>
         </tr>

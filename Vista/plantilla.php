@@ -72,6 +72,12 @@ session_start();
             case "nueva_contrasena":
                 include "Vista\paginas\\formulario_contrasenas.php";
                 break;
+            case "editar_contrasena":
+                include "Vista\paginas\\editar_contrasenas.php";
+                break;
+            case "borrar_contrasena":
+                include "Vista\paginas\borrar_contrasena.php";
+                break;
             case "salir":
                 include "Vista\paginas\salir.php";
                 break;
