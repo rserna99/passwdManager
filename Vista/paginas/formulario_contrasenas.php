@@ -41,6 +41,7 @@ else{
         <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Guardar contraseña</button>
     </div>
 </form>
+    <br>
 
 
 <?php
@@ -48,8 +49,6 @@ else{
 require "Controlador/contrasenas.controlador.php";
 
 $registro = ControladorContrasenas::ctrCrearContrasena();
-
-print_r($registro);
 
 if ($registro){
     echo "<script>

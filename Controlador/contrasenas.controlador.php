@@ -1,10 +1,12 @@
 <?php
 
+require "Modelo/contrasenas.modelo.php";
+
 class ControladorContrasenas{
 
     public static function ctrCrearContrasena(){
 
-        if (isset($_POST["nombre"])) {
+        if (isset($_POST["servicio"])) {
             $datos = array(
                 "servicio" => $_POST["servicio"],
                 "url" => $_POST["url"],
@@ -12,13 +14,10 @@ class ControladorContrasenas{
                 "contrasena" => $_POST["contrasena"]
             );
 
-            print_r("CTR: " . $datos);
-
             $respuesta = contrasenasModelo::mdlCrearContrasena($datos);
 
             return $respuesta;
         }
-
     }
 
     public static function ctrListarContrasenas($idUsuario){
