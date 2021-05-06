@@ -38,7 +38,8 @@ class ControladorUsuarios{
             if (isset($usuario["email"])){
                 if ($usuario["email"] == $mail && $usuario["contrasena"] == $contrasena){
 
-                    echo '<div class="alert alert-success text-center">El usuario es valido</div>';
+                    $_SESSION["usuarioIniciado"] = "ok";
+                    $_SESSION["idUsuario"] = $usuario["id"];
 
                     echo '
                       <script>

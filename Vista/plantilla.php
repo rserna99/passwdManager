@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -67,7 +71,7 @@
                 break;
             case "salir":
                 //include "";
-                echo "<h3>Cerrar sesion</h3>";
+                include "Vista\paginas\salir.php";
                 break;
             default:
                 echo "<h1>Error 404: Pagina no valida</h1>";

@@ -1,3 +1,18 @@
+<?php
+
+if (isset($_SESSION["usuarioIniciado"])) {
+    if ($_SESSION["usuarioIniciado"] != "ok"){
+        echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
+        return;
+    }
+}
+else{
+    echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
+    return;
+}
+
+?>
+
 <table class="table table-striped">
     <thead>
     <tr>
