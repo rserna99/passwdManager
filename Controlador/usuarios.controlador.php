@@ -13,17 +13,15 @@ class ControladorUsuarios{
                 "contrasena" => $_POST["contrasenaRegistro"]
             );
 
-            $respuesta = usuariosModelo::mdlRegistoUsuario($datos);
+            $respuesta = ModeloUsuarios::mdlRegistoUsuario($datos);
 
             return $respuesta;
         }
-
-
     }
 
     public static function ctrListarUsuarios(){
 
-        $resultado = usuariosModelo::mdlObtenerUsuarios(null);
+        $resultado = ModeloUsuarios::mdlObtenerUsuarios(null);
 
         return $resultado;
     }
@@ -33,7 +31,7 @@ class ControladorUsuarios{
         if (isset($_POST["email"])){
             $mail = $_POST["email"];
             $contrasena = $_POST["contrasena"];
-            $usuario = usuariosModelo::mdlObtenerUsuarios($mail);
+            $usuario = ModeloUsuarios::mdlObtenerUsuarios($mail);
 
             if (isset($usuario["email"])){
                 if ($usuario["email"] == $mail && $usuario["contrasena"] == $contrasena){
@@ -49,10 +47,7 @@ class ControladorUsuarios{
                         
                         window.location = "index.php?pagina=contrasenas";
                       </script>';
-
-
                 }
-
             }
             else {
 
@@ -66,8 +61,20 @@ class ControladorUsuarios{
                 echo '<div class="alert alert-danger text-center">El usuario es incorrecto</div>';
 
             }
+        }
+    }
 
-
+    // Funcion para validar si un usuario ha iniciado sesion y puede acceder a una paginaadmin
+    public static function ctrUsuarioIniciado(){
+        if (isset($_SESSION["usuarioIniciado"])) {
+            if ($_SESSION["usuarioIniciado"] != "ok"){
+                echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
+                return;
+            }
+        }
+        else{
+            echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
+            return;
         }
     }
 }

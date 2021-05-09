@@ -2,37 +2,27 @@
 
 require_once "Modelo\conexion.php"; 
 
-Class usuariosModelo{
+Class ModeloUsuarios{
 
-    
-    // $datos es un diccionario con el nombre, email y la contraseña
     static public function mdlRegistoUsuario($datos) {
 
         $consulta = Conexion::conectar()->prepare(
             "INSERT INTO usuarios(nombre, email, contrasena) VALUES (:nombre, :email, :contrasena)"
         );
         
-        
         $consulta->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $consulta->bindParam(":email", $datos["email"], PDO::PARAM_STR);
         $consulta->bindParam(":contrasena", $datos["contrasena"], PDO::PARAM_STR);
-        // Se usa bindParam para evitar ataques de SQLinjection
-
-        //$retVal = ($consulta->execute()) ? true : print_r(Conexion::conectar()->errorInfo()) ;
 
         if ($consulta->execute()) 
         {
-
             return true;
         }
         else {
-            
-            //print_r(Conexion::conectar()->errorInfo());
             $consulta->close();
             $consulta = null;
             return Conexion::conectar()->errorInfo();
         }
-
     }
 
 
@@ -45,7 +35,6 @@ Class usuariosModelo{
             );
 
             $consulta->execute();
-
             $resultado = $consulta->fetchAll();
 
             return $resultado;
@@ -54,10 +43,10 @@ Class usuariosModelo{
             $consulta = Conexion::conectar()->prepare(
                 "SELECT * FROM usuarios WHERE email = :email"
             );
+
             $consulta->bindParam(":email", $email);
 
             $consulta->execute();
-
             $resultado = $consulta->fetch();
 
             return $resultado;
@@ -65,7 +54,6 @@ Class usuariosModelo{
 
         $consulta->close();
         $consulta = null;
-
     }
 
 }

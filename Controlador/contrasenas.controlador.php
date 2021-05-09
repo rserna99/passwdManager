@@ -1,6 +1,6 @@
 <?php
 
-require "Modelo/contrasenas.modelo.php";
+require "Modelo/modelo.contrasenas.php";
 
 class ControladorContrasenas{
 
@@ -14,7 +14,7 @@ class ControladorContrasenas{
                 "contrasena" => $_POST["contrasena"]
             );
 
-            $respuesta = contrasenasModelo::mdlCrearContrasena($datos);
+            $respuesta = ModeloContrasenas::mdlCrearContrasena($datos);
 
             return $respuesta;
         }
@@ -22,7 +22,7 @@ class ControladorContrasenas{
 
     public static function ctrListarContrasenas($idContrasena){
 
-        $resultado = contrasenasModelo::mdlObtenerContrasenas($idContrasena);
+        $resultado = ModeloContrasenas::mdlObtenerContrasenas($idContrasena);
 
         return $resultado;
 
@@ -39,7 +39,7 @@ class ControladorContrasenas{
                 "contrasena" => $_POST["contrasena"]
             );
 
-            $respuesta = contrasenasModelo::mdlModificarContrasena($datos);
+            $respuesta = ModeloContrasenas::mdlModificarContrasena($datos);
 
             return $respuesta;
         }
@@ -49,7 +49,7 @@ class ControladorContrasenas{
     {
         if (isset($_POST["borrarContrasenaId"])) {
 
-            $respuesta = contrasenasModelo::mdlBorrarContrasena($_POST["borrarContrasenaId"]);
+            $respuesta = ModeloContrasenas::mdlBorrarContrasena($_POST["borrarContrasenaId"]);
 
             if ($respuesta){
                 echo "<script>

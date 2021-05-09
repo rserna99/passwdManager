@@ -61,25 +61,22 @@ session_start();
         switch ($_GET["pagina"]) {
 
             case "registro":
-                include "Vista\paginas\\registro.php";
+                include "Vista\paginas\usuarios\\registro.php";
                 break;
             case "iniciar_sesion":
-                include "Vista\paginas\iniciar_sesion.php";
+                include "Vista\paginas\usuarios\iniciar_sesion.php";
                 break;
             case "contrasenas":
-                include "Vista\paginas\listar_contrasenas.php";
+                include "Vista\paginas\contrasenas\listar_contrasenas.php";
                 break;
             case "nueva_contrasena":
-                include "Vista\paginas\\formulario_contrasenas.php";
+                include "Vista\paginas\contrasenas\\crear_contrasena.php";
                 break;
             case "editar_contrasena":
-                include "Vista\paginas\\editar_contrasenas.php";
-                break;
-            case "borrar_contrasena":
-                include "Vista\paginas\borrar_contrasena.php";
+                include "Vista\paginas\contrasenas\\editar_contrasenas.php";
                 break;
             case "salir":
-                include "Vista\paginas\salir.php";
+                include "Vista\paginas\usuarios\salir.php";
                 break;
             default:
                 echo "<h1>Error 404: Pagina no valida</h1>";
@@ -89,8 +86,5 @@ session_start();
 
     ?>
 </div>
-
-
 </body>
-
 </html>

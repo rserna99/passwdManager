@@ -2,7 +2,7 @@
 
 require_once "Modelo\conexion.php";
 
-Class contrasenasModelo{
+Class ModeloContrasenas{
 
     static public function mdlCrearContrasena($datos){
 
@@ -18,7 +18,6 @@ Class contrasenasModelo{
 
         if ($consulta->execute())
         {
-
             return true;
         }
         else {
@@ -31,7 +30,6 @@ Class contrasenasModelo{
 
     static public function mdlObtenerContrasenas($idContrasena){
 
-        // Contraseña en concreto
         if ($idContrasena != null){
 
             $consulta = Conexion::conectar()->prepare(
@@ -41,13 +39,10 @@ Class contrasenasModelo{
             $consulta->bindParam(":id_contrasena", $idContrasena);
 
             $consulta->execute();
-
             $resultado = $consulta->fetchAll();
 
             return $resultado;
-
         }
-        // Todas las contraseñas del usuario
         else {
 
             $consulta = Conexion::conectar()->prepare(
@@ -56,11 +51,9 @@ Class contrasenasModelo{
             $consulta->bindParam(":id_usuario", $_SESSION["idUsuario"]);
 
             $consulta->execute();
-
             $resultado = $consulta->fetchAll();
 
             return $resultado;
-
         }
 
         $consulta->close();
@@ -82,7 +75,6 @@ Class contrasenasModelo{
 
         if ($consulta->execute())
         {
-
             return true;
         }
         else {
@@ -103,7 +95,6 @@ Class contrasenasModelo{
 
         if ($consulta->execute())
         {
-
             return true;
         }
         else {
