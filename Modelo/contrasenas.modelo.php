@@ -29,7 +29,7 @@ Class contrasenasModelo{
         }
     }
 
-    static public function mdlObtenerContrasenas($idContrasena = null){
+    static public function mdlObtenerContrasenas($idContrasena){
 
         // Contraseña en concreto
         if ($idContrasena != null){
@@ -49,6 +49,7 @@ Class contrasenasModelo{
         }
         // Todas las contraseñas del usuario
         else {
+
             $consulta = Conexion::conectar()->prepare(
                 "SELECT * FROM contrasenas WHERE id_usuario = :id_usuario"
             );
@@ -78,6 +79,27 @@ Class contrasenasModelo{
         $consulta->bindParam(":url", $datos["url"]);
         $consulta->bindParam(":usuario", $datos["usuario"]);
         $consulta->bindParam(":contrasena", $datos["contrasena"]);
+
+        if ($consulta->execute())
+        {
+
+            return true;
+        }
+        else {
+
+            $consulta->close();
+            $consulta = null;
+            return Conexion::conectar()->errorInfo();
+        }
+    }
+
+    public static function mdlBorrarContrasena($idContrasena)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "DELETE FROM `contrasenas` WHERE id = :id"
+        );
+
+        $consulta->bindParam(":id", $idContrasena);
 
         if ($consulta->execute())
         {

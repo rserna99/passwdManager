@@ -55,3 +55,21 @@ if (isset($_GET["id"])){
 $contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario"]);
 
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
+
+if ($actualizar){
+    echo "<script>
+                        if (window.history.replaceState){
+                            window.history.replaceState(null, null, window.location.href);
+                        }
+                       </script>";
+
+    echo '<div class="alert alert-success" role="alert">Contraseña actualizada correctamente</div>';
+
+    echo '<script>
+            setTimeout(function() {
+              window.location = "index.php?pagina=contrasenas";
+            },800);
+          </script>';
+
+
+}

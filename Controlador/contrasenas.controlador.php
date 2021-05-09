@@ -20,7 +20,7 @@ class ControladorContrasenas{
         }
     }
 
-    public static function ctrListarContrasenas($idContrasena = null){
+    public static function ctrListarContrasenas($idContrasena){
 
         $resultado = contrasenasModelo::mdlObtenerContrasenas($idContrasena);
 
@@ -41,6 +41,16 @@ class ControladorContrasenas{
 
             $respuesta = contrasenasModelo::mdlModificarContrasena($datos);
 
+            return $respuesta;
+        }
+    }
+
+    public static function ctrBorrarContrasena()
+    {
+        if (isset($_POST["borrarContrasenaId"])) {
+
+            $respuesta = contrasenasModelo::mdlBorrarContrasena($_POST["borrarContrasenaId"]);
+
             if ($respuesta){
                 echo "<script>
                         if (window.history.replaceState){
@@ -48,11 +58,8 @@ class ControladorContrasenas{
                         }
                        </script>";
 
-                echo '<script>window.location = "index.php?pagina=contrasenas"; </script>';
-
-                //echo '<div class="alert alert-success" role="alert">Contraseña actualizada correctamente</div>';
+                echo '<script>window.location = "index.php?pagina=contrasenas";</script>';
             }
-
             return $respuesta;
         }
     }

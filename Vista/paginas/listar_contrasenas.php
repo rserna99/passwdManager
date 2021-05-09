@@ -13,7 +13,7 @@ else{
 
 require "Controlador/contrasenas.controlador.php";
 
-$contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario"]);
+$contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
 
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
 
@@ -52,8 +52,18 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
             </td>
             <td>
                 <div class="btn-group">
-                    <a href="index.php?pagina=editar_contrasena&id=<?php echo $value["id"]?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                    <a href="index.php?pagina=borrar_contrasena&id=<?php echo $value["id"]?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                    <div class="px-1">
+                        <a href="index.php?pagina=editar_contrasena&id=<?php echo $value["id"]?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <form method="post">
+                        <input type="hidden" value="<?php echo $value["id"]?>" name="borrarContrasenaId">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+
+                        <?php
+                            $eliminar = ControladorContrasenas::ctrBorrarContrasena();
+                        ?>
+
+                    </form>
                 </div>
             </td>
         </tr>
