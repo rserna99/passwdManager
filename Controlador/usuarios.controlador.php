@@ -1,22 +1,39 @@
 <?php
 
 require "Modelo/usuarios.modelo.php";
+require "Controlador/seguridad.controlador.php";
 
 class ControladorUsuarios{
 
     public static function ctrRegistrarUsuario(){
 
-        if (isset($_POST["nombreRegistro"])) {
-            $datos = array(
-                "nombre" => $_POST["nombreRegistro"],
-                "email" => $_POST["emailRegistro"],
-                "contrasena" => $_POST["contrasenaRegistro"]
-            );
-
-            $respuesta = ModeloUsuarios::mdlRegistoUsuario($datos);
-
-            return $respuesta;
+        if (!(isset($_POST["nombreRegistro"]) && $_POST["nombreRegistro"] != null)){
+            return;
         }
+
+        $validarNombre = ControladorSeguridad::ctrValidarNombreUsuario($_POST["nombreRegistro"]);
+        $validarEmail = ControladorSeguridad::ctrValidarEmail($_POST["emailRegistro"]);
+        $validarContrasena = ControladorSeguridad::ctrValidarContrasena($_POST["contrasenaRegistro"]);
+
+        if ($validarNombre != "ok") {
+            return $validarNombre;
+        }
+        if ($validarEmail != "ok") {
+            return $validarEmail;
+        }
+        if ($validarContrasena != "ok") {
+            return $validarContrasena;
+        }
+
+        $datos = array(
+            "nombre" => $_POST["nombreRegistro"],
+            "email" => $_POST["emailRegistro"],
+            "contrasena" => $_POST["contrasenaRegistro"]
+        );
+
+        $respuesta = ModeloUsuarios::mdlRegistoUsuario($datos);
+
+        return $respuesta;
     }
 
     public static function ctrListarUsuarios(){
@@ -69,12 +86,10 @@ class ControladorUsuarios{
         if (isset($_SESSION["usuarioIniciado"])) {
             if ($_SESSION["usuarioIniciado"] != "ok"){
                 echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
-                return;
             }
         }
         else{
             echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
-            return;
         }
     }
 }

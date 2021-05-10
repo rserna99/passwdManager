@@ -16,12 +16,12 @@ Class ModeloUsuarios{
 
         if ($consulta->execute()) 
         {
-            return true;
+            return "ok";
         }
         else {
             $consulta->close();
             $consulta = null;
-            return Conexion::conectar()->errorInfo();
+            return "error:No se ha podido guardar el usuario";
         }
     }
 

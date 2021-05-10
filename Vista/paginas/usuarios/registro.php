@@ -29,16 +29,24 @@
 
 require "Controlador/usuarios.controlador.php";
 
+
 $registro = ControladorUsuarios::ctrRegistrarUsuario();
 
-if ($registro){
+if ($registro == "ok"){
     echo "<script>
         if (window.history.replaceState){
             window.history.replaceState(null, null, window.location.href);
         }
     </script>";
     echo '<div class="alert alert-success" role="alert">Usuario registrado</div>';
+
+    echo '<script>
+            setTimeout(function() {
+              window.location = "index.php?iniciar_sesion";
+            },800);
+          </script>';
+}
+else if (str_contains($registro, "error")) {
+    echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';
 }
 
-
-?>
