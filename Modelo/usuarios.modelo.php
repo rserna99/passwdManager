@@ -6,13 +6,17 @@ Class ModeloUsuarios{
 
     static public function mdlRegistoUsuario($datos) {
 
+        $fecha = date('Y-m-d H:i:s');
+        $token = strval(md5($fecha));
         $consulta = Conexion::conectar()->prepare(
-            "INSERT INTO usuarios(nombre, email, contrasena) VALUES (:nombre, :email, :contrasena)"
+            "INSERT INTO usuarios(token, nombre, email, contrasena, fecha_registro) VALUES (:token, :nombre, :email, :contrasena, :fecha_registro)"
         );
-        
+
+        $consulta->bindParam(":token", $token);
         $consulta->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $consulta->bindParam(":email", $datos["email"], PDO::PARAM_STR);
         $consulta->bindParam(":contrasena", $datos["contrasena"], PDO::PARAM_STR);
+        $consulta->bindParam(":fecha_registro", $fecha);
 
         if ($consulta->execute()) 
         {

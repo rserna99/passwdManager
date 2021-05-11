@@ -7,14 +7,19 @@ Class ModeloContrasenas{
     static public function mdlCrearContrasena($datos){
 
         $consulta = Conexion::conectar()->prepare(
-            "INSERT INTO contrasenas(id_usuario, servicio, url, usuario, contrasena) VALUES (:id_usuario,:servicio,:url,:usuario,:contrasena)"
+            "INSERT INTO contrasenas(token, id_usuario, servicio, url, usuario, contrasena, fecha_creacion) VALUES (:token, :id_usuario,:servicio,:url,:usuario,:contrasena, :fecha_creacion)"
         );
 
+        $fecha = date('Y-m-d H:i:s');
+        $token = strval(md5($fecha));
+
+        $consulta->bindParam(":token", $token);
         $consulta->bindParam(":id_usuario", $_SESSION["idUsuario"]);
         $consulta->bindParam(":servicio", $datos["servicio"]);
         $consulta->bindParam(":url", $datos["url"]);
         $consulta->bindParam(":usuario", $datos["usuario"]);
         $consulta->bindParam(":contrasena", $datos["contrasena"]);
+        $consulta->bindParam(":fecha_creacion", $fecha);
 
         if ($consulta->execute())
         {
