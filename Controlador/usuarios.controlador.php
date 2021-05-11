@@ -66,8 +66,22 @@ class ControladorUsuarios{
                         window.location = "index.php?pagina=contrasenas";
                       </script>';
                 }
+                else {
+
+                    if ($usuario["intentos_fallidos"] < 3){
+
+                    }
+                    // Actualizar numero de intentos fallidos
+                    $fallos = $usuario["intentos_fallidos"]+1;
+                    $actualizarFallos = ModeloUsuarios::mdlActualizarIntentosFallidos($fallos, $usuario["token"]);
+
+                    if ($actualizarFallos){
+                        echo "<div class=\"alert alert-danger text-center\">Intentos restantes: " . (3-$fallos) . " </div>";
+                    }
+                }
             }
             else {
+
 
                 echo '
                       <script>
@@ -76,7 +90,7 @@ class ControladorUsuarios{
                         }
                       </script>';
 
-                echo '<div class="alert alert-danger text-center">El usuario es incorrecto</div>';
+                echo "<div class=\"alert alert-danger text-center\">Usuario o contraseña incorrecto </div>";
 
             }
         }

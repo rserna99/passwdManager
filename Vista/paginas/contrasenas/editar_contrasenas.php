@@ -1,18 +1,10 @@
 <?php
 
-if (isset($_SESSION["usuarioIniciado"])) {
-    if ($_SESSION["usuarioIniciado"] != "ok"){
-        echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
-        return;
-    }
-}
-else{
-    echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
-    return;
-}
+require "Controlador/usuarios.controlador.php";
+ControladorUsuarios::ctrUsuarioIniciado();
+
 
 require "Controlador/contrasenas.controlador.php";
-
 
 if (isset($_GET["id"])){
     $contrasena = ControladorContrasenas::ctrListarContrasenas($_GET["id"]);
@@ -43,7 +35,7 @@ if (isset($_GET["id"])){
             <label class="col-sm-4" for="contrasena">Contraseña: </label>
             <input class="col-sm-8" type="password" value="<?php echo $contrasena[0]["contrasena"]; ?>" name="contrasena" id="contrasena">
         </div>
-        <input type="hidden" value="<?php echo $contrasena[0]["id"]; ?>" name="idContrasena">
+        <input type="hidden" value="<?php echo $contrasena[0]["token"]; ?>" name="idContrasena">
         <br>
         <div class="row">
             <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Actualizar contraseña</button>
@@ -70,6 +62,5 @@ if ($actualizar){
               window.location = "index.php?pagina=contrasenas";
             },800);
           </script>';
-
 
 }

@@ -60,4 +60,26 @@ Class ModeloUsuarios{
         $consulta = null;
     }
 
+
+    static public function mdlActualizarIntentosFallidos($intentos, $token){
+        $consulta = Conexion::conectar()->prepare(
+            "UPDATE usuarios SET intentos_fallidos= :intentos WHERE token = :token"
+        );
+
+
+        $consulta->bindParam(":token", $token);
+        $consulta->bindParam(":intentos", $intentos);
+
+        if ($consulta->execute())
+        {
+            return true;
+        }
+        else {
+
+            $consulta->close();
+            $consulta = null;
+            return Conexion::conectar()->errorInfo();
+        }
+    }
+
 }

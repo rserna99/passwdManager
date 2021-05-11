@@ -1,15 +1,7 @@
 <?php
 
-if (isset($_SESSION["usuarioIniciado"])) {
-    if ($_SESSION["usuarioIniciado"] != "ok"){
-        echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
-        return;
-    }
-}
-else{
-    echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
-    return;
-}
+require "Controlador/usuarios.controlador.php";
+ControladorUsuarios::ctrUsuarioIniciado();
 
 require "Controlador/contrasenas.controlador.php";
 
@@ -26,7 +18,7 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
 <a class="btn btn-primary" href="index.php?pagina=nueva_contrasena">Crear nueva contraseña</a>
 <br>
 <br>
-<table class="table table-striped">
+<table class="table table-striped table-responsive">
     <thead>
     <tr>
         <th>Servicio</th>
@@ -48,19 +40,28 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
             </td>
             <td>
                 <?php echo $value["contrasena"]; ?>
-                <button class="btn btn-primary btn-sm"><i class="fas fa-clipboard"></i></button>
+
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-clipboard"></i></button>
+                    </div>
+                </div>
+
+
             </td>
             <td>
                 <div class="btn-group">
                     <div class="px-1">
-                        <a href="index.php?pagina=editar_contrasena&id=<?php echo $value["id"]?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                        <a href="index.php?pagina=editar_contrasena&id=<?php echo $value["token"]?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                     </div>
                     <form method="post">
-                        <input type="hidden" value="<?php echo $value["id"]?>" name="borrarContrasenaId">
+                        <input type="hidden" value="<?php echo $value["token"]?>" name="borrarContrasenaId">
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 
                         <?php
                             $eliminar = ControladorContrasenas::ctrBorrarContrasena();
+
                         ?>
 
                     </form>
