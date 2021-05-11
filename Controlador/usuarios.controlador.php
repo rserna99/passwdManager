@@ -53,6 +53,8 @@ class ControladorUsuarios{
             if (isset($usuario["email"])){
                 if ($usuario["email"] == $mail && $usuario["contrasena"] == $contrasena){
 
+                    ModeloUsuarios::mdlActualizarIntentosFallidos(0, $usuario["token"]);
+
                     $_SESSION["usuarioIniciado"] = "ok";
                     $_SESSION["idUsuario"] = $usuario["id"];
                     $_SESSION["tokenUsuario"] = $usuario["token"];
@@ -68,16 +70,20 @@ class ControladorUsuarios{
                 }
                 else {
 
-                    if ($usuario["intentos_fallidos"] < 3){
-
-                    }
                     // Actualizar numero de intentos fallidos
-                    $fallos = $usuario["intentos_fallidos"]+1;
-                    $actualizarFallos = ModeloUsuarios::mdlActualizarIntentosFallidos($fallos, $usuario["token"]);
+                    if ($usuario["intentos_fallidos"] < 3){
+                        $fallos = $usuario["intentos_fallidos"]+1;
+                        $actualizarFallos = ModeloUsuarios::mdlActualizarIntentosFallidos($fallos, $usuario["token"]);
 
-                    if ($actualizarFallos){
-                        echo "<div class=\"alert alert-danger text-center\">Intentos restantes: " . (3-$fallos) . " </div>";
+                        if ($actualizarFallos){
+                            echo "<div class='alert alert-danger text-center' role='alert'>Intentos restantes: " . (3-$fallos) . " </div>";
+                        }
                     }
+                    else {
+                        echo "<div class='alert alert-warning text-center' role='alert'>RECAPTCHA Debes validar que no eres un robot </div>";
+                    }
+
+
                 }
             }
             else {
