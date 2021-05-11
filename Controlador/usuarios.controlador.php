@@ -25,10 +25,12 @@ class ControladorUsuarios{
             return $validarContrasena;
         }
 
+        $contrasenaEncriptada = crypt($_POST["contrasenaRegistro"], '$2a$07$ghfFdsOgfmdrQxdrtkLxp$');
+
         $datos = array(
             "nombre" => $_POST["nombreRegistro"],
             "email" => $_POST["emailRegistro"],
-            "contrasena" => $_POST["contrasenaRegistro"]
+            "contrasena" => $contrasenaEncriptada
         );
 
         $respuesta = ModeloUsuarios::mdlRegistoUsuario($datos);
@@ -51,7 +53,10 @@ class ControladorUsuarios{
             $usuario = ModeloUsuarios::mdlObtenerUsuarios($mail);
 
             if (isset($usuario["email"])){
-                if ($usuario["email"] == $mail && $usuario["contrasena"] == $contrasena){
+
+                $contrasenaEncriptada = crypt($contrasena, '$2a$07$ghfFdsOgfmdrQxdrtkLxp$');
+
+                if ($usuario["email"] == $mail && $usuario["contrasena"] == $contrasenaEncriptada){
 
                     ModeloUsuarios::mdlActualizarIntentosFallidos(0, $usuario["token"]);
 
