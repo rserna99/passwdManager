@@ -7,13 +7,14 @@ Class ModeloContrasenas{
     static public function mdlCrearContrasena($datos){
 
         $consulta = Conexion::conectar()->prepare(
-            "INSERT INTO contrasenas(token, id_usuario, servicio, url, usuario, contrasena, fecha_creacion) VALUES (:token, :id_usuario,:servicio,:url,:usuario,:contrasena, :fecha_creacion)"
+            "INSERT INTO contrasenas(token, token_usuario, id_usuario, servicio, url, usuario, contrasena, fecha_creacion) VALUES (:token, :token_usuario, :id_usuario,:servicio,:url,:usuario,:contrasena, :fecha_creacion)"
         );
 
         $fecha = date('Y-m-d H:i:s');
         $token = strval(md5($fecha));
 
         $consulta->bindParam(":token", $token);
+        $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
         $consulta->bindParam(":id_usuario", $_SESSION["idUsuario"]);
         $consulta->bindParam(":servicio", $datos["servicio"]);
         $consulta->bindParam(":url", $datos["url"]);
@@ -33,15 +34,16 @@ Class ModeloContrasenas{
         }
     }
 
-    static public function mdlObtenerContrasenas($idContrasena){
+    static public function mdlObtenerContrasenas($token){
 
-        if ($idContrasena != null){
+        if ($token != null){
+
 
             $consulta = Conexion::conectar()->prepare(
-                "SELECT * FROM contrasenas WHERE id_usuario = :id_usuario AND id = :id_contrasena"
+                "SELECT * FROM contrasenas WHERE token_usuario = :token_usuario AND token = :token"
             );
-            $consulta->bindParam(":id_usuario", $_SESSION["idUsuario"]);
-            $consulta->bindParam(":id_contrasena", $idContrasena);
+            $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
+            $consulta->bindParam(":token", $token);
 
             $consulta->execute();
             $resultado = $consulta->fetchAll();
@@ -51,11 +53,12 @@ Class ModeloContrasenas{
         else {
 
             $consulta = Conexion::conectar()->prepare(
-                "SELECT * FROM contrasenas WHERE id_usuario = :id_usuario"
+                "SELECT * FROM contrasenas WHERE token_usuario = :token_usuario"
             );
-            $consulta->bindParam(":id_usuario", $_SESSION["idUsuario"]);
+            $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
 
             $consulta->execute();
+
             $resultado = $consulta->fetchAll();
 
             return $resultado;
@@ -69,14 +72,17 @@ Class ModeloContrasenas{
     public static function mdlModificarContrasena(array $datos)
     {
         $consulta = Conexion::conectar()->prepare(
-            "UPDATE contrasenas SET servicio= :servicio ,url= :url ,usuario= :usuario ,contrasena= :contrasena WHERE id = :id"
+            "UPDATE contrasenas SET servicio= :servicio ,url= :url ,usuario= :usuario ,contrasena= :contrasena, fecha_modificacion = :fecha_modificacion WHERE token = :token"
         );
 
-        $consulta->bindParam(":id", $datos["id"]);
+        $date = date('Y-m-d H:i:s');
+
+        $consulta->bindParam(":token", $datos["token"]);
         $consulta->bindParam(":servicio", $datos["servicio"]);
         $consulta->bindParam(":url", $datos["url"]);
         $consulta->bindParam(":usuario", $datos["usuario"]);
         $consulta->bindParam(":contrasena", $datos["contrasena"]);
+        $consulta->bindParam(":fecha_modificacion", $date);
 
         if ($consulta->execute())
         {
@@ -93,10 +99,10 @@ Class ModeloContrasenas{
     public static function mdlBorrarContrasena($idContrasena)
     {
         $consulta = Conexion::conectar()->prepare(
-            "DELETE FROM `contrasenas` WHERE id = :id"
+            "DELETE FROM `contrasenas` WHERE token = :token"
         );
 
-        $consulta->bindParam(":id", $idContrasena);
+        $consulta->bindParam(":token", $idContrasena);
 
         if ($consulta->execute())
         {
@@ -106,7 +112,8 @@ Class ModeloContrasenas{
 
             $consulta->close();
             $consulta = null;
-            return Conexion::conectar()->errorInfo();
+            //return Conexion::conectar()->errorInfo();
+            return ;
         }
     }
 }

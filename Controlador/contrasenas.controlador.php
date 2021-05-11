@@ -32,7 +32,7 @@ class ControladorContrasenas{
     {
         if (isset($_POST["servicio"])) {
             $datos = array(
-                "id" => $_POST["idContrasena"],
+                "token" => $_POST["idContrasena"],
                 "servicio" => $_POST["servicio"],
                 "url" => $_POST["url"],
                 "usuario" => $_POST["usuario"],

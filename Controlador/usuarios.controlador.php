@@ -55,6 +55,7 @@ class ControladorUsuarios{
 
                     $_SESSION["usuarioIniciado"] = "ok";
                     $_SESSION["idUsuario"] = $usuario["id"];
+                    $_SESSION["tokenUsuario"] = $usuario["token"];
 
                     echo '
                       <script>
