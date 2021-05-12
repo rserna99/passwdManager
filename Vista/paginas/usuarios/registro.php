@@ -1,7 +1,7 @@
 <h2>Registrar usuario</h2>
 <hr style="width: 98%;"><br>
 
-<form method="post">
+<form method="post" class="was-validated">
 
     <div class="input-group input-group mb-3">
         <div class="input-group-prepend">

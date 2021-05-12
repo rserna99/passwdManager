@@ -33,20 +33,32 @@ session_start();
     </button>
     <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav mr-auto">
-            <li class="navbar-item">
-                <a href="registro" class="nav-link">Registrarse</a>
-            </li>
-            <li class="navbar-item">
-                <a href="iniciar-sesion" class="nav-link">Iniciar sesion</a>
-            </li>
-            <li class="navbar-item">
-                <a href="contrasenas" class="nav-link">Contraseñas</a>
-            </li>
-            <li class="navbar-item">
-                <a href="salir" class="nav-link">Salir</a>
-            </li>
-        </ul>
-        </li>
+
+            <?php
+            if (isset($_SESSION["usuarioIniciado"]) && $_SESSION["usuarioIniciado"] == "ok")
+            {
+                echo '<li class="navbar-item">';
+                echo '<a href="contrasenas" class="nav-link">Contraseñas</a>';
+                echo '</li>';
+
+                echo '<li class="navbar-item">';
+                echo '<a href="index.php?pagina=editar-usuario&token=' . $_SESSION["tokenUsuario"] .'" class="nav-link">Editar usuario</a>';
+                echo '</li>';
+
+                echo '<li class="navbar-item">';
+                echo '<a href="salir" class="nav-link">Salir</a>';
+                echo '</li>';
+            }
+            else {
+                echo '<li class="navbar-item">';
+                echo '<a href="registro" class="nav-link">Registrarse</a>';
+                echo '</li>';
+
+                echo '<li class="navbar-item">';
+                echo '<a href="iniciar-sesion" class="nav-link">Iniciar sesion</a>';
+                echo '</li>';
+            }
+            ?>
         </ul>
     </div>
 </nav>
