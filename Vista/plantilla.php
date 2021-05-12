@@ -34,16 +34,16 @@ session_start();
     <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav mr-auto">
             <li class="navbar-item">
-                <a href="index.php?pagina=registro" class="nav-link">Registrarse</a>
+                <a href="registro" class="nav-link">Registrarse</a>
             </li>
             <li class="navbar-item">
-                <a href="index.php?pagina=iniciar_sesion" class="nav-link">Iniciar sesion</a>
+                <a href="iniciar-sesion" class="nav-link">Iniciar sesion</a>
             </li>
             <li class="navbar-item">
-                <a href="index.php?pagina=contrasenas" class="nav-link">Contraseñas</a>
+                <a href="contrasenas" class="nav-link">Contraseñas</a>
             </li>
             <li class="navbar-item">
-                <a href="index.php?pagina=salir" class="nav-link">Salir</a>
+                <a href="salir" class="nav-link">Salir</a>
             </li>
         </ul>
         </li>
@@ -63,16 +63,16 @@ session_start();
             case "registro":
                 include "Vista\paginas\usuarios\\registro.php";
                 break;
-            case "iniciar_sesion":
+            case "iniciar-sesion":
                 include "Vista\paginas\usuarios\iniciar_sesion.php";
                 break;
             case "contrasenas":
                 include "Vista\paginas\contrasenas\listar_contrasenas.php";
                 break;
-            case "nueva_contrasena":
+            case "nueva-contrasena":
                 include "Vista\paginas\contrasenas\\crear_contrasena.php";
                 break;
-            case "editar_contrasena":
+            case "editar-contrasena":
                 include "Vista\paginas\contrasenas\\editar_contrasenas.php";
                 break;
             case "salir":
@@ -82,6 +82,9 @@ session_start();
                 echo "<h1>Error 404: Pagina no valida</h1>";
 
         }
+    }
+    else {
+        include "Vista\paginas\usuarios\iniciar_sesion.php";
     }
 
     ?>

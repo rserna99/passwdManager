@@ -47,7 +47,7 @@ if ($registro == "ok"){
 
     echo '<script>
             setTimeout(function() {
-              window.location = "index.php?pagina=iniciar_sesion";
+              window.location = "iniciar-sesion";
             },800);
           </script>';
 }

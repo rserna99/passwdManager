@@ -58,7 +58,7 @@ class ControladorContrasenas{
                         }
                        </script>";
 
-                echo '<script>window.location = "index.php?pagina=contrasenas";</script>';
+                echo '<script>window.location = "contrasenas";</script>';
             }
             return $respuesta;
         }

@@ -49,7 +49,7 @@ if ($registro){
         }
     </script>";
     //echo '<div class="alert alert-success" role="alert">Contraseña almacenada</div>';
-    echo '<script>window.location = "index.php?pagina=contrasenas"</script>';
+    echo '<script>window.location = "contrasenas"</script>';
 }
 else
 

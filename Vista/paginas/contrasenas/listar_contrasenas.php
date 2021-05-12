@@ -15,7 +15,7 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
 <hr style="width: 98%">
 <br>
 
-<a class="btn btn-primary" href="index.php?pagina=nueva_contrasena">Crear nueva contraseña</a>
+<a class="btn btn-primary" href="nueva-contrasena">Crear nueva contraseña</a>
 <br>
 <br>
 <div class="table-responsive">
@@ -54,7 +54,7 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
                 <td>
                     <div class="btn-group">
                         <div class="px-1">
-                            <a href="index.php?pagina=editar_contrasena&id=<?php echo $value["token"]?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                            <a href="index.php?pagina=editar-contrasena&id=<?php echo $value["token"]?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         </div>
                         <form method="post">
                             <input type="hidden" value="<?php echo $value["token"]?>" name="borrarContrasenaId">

@@ -70,7 +70,7 @@ class ControladorUsuarios{
                             window.history.replaceState(null, null, window.location.href);
                         }
                         
-                        window.location = "index.php?pagina=contrasenas";
+                        window.location = "contrasenas";
                       </script>';
                 }
                 else {
@@ -111,11 +111,11 @@ class ControladorUsuarios{
     public static function ctrUsuarioIniciado(){
         if (isset($_SESSION["usuarioIniciado"])) {
             if ($_SESSION["usuarioIniciado"] != "ok"){
-                echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
+                echo '<script>window.location = "iniciar-sesion";</script>';
             }
         }
         else{
-            echo '<script>window.location = "index.php?pagina=iniciar_sesion";</script>';
+            echo '<script>window.location = "iniciar-sesion";</script>';
         }
     }
 }

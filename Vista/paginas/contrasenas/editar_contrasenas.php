@@ -59,7 +59,7 @@ if ($actualizar){
 
     echo '<script>
             setTimeout(function() {
-              window.location = "index.php?pagina=contrasenas";
+              window.location = "contrasenas";
             },800);
           </script>';
 
