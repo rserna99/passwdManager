@@ -2,21 +2,26 @@
 <hr style="width: 98%;"><br>
 
 <form method="post">
-    <div class="row">
-        <label class="col-sm-4" for="nombre">Nombre: </label>
-        <input class="col-sm-8" type="text" name="nombreRegistro" id="nombre" onblur="">
+
+    <div class="input-group input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="icono_nombre"><i class="fas fa-user"></i></span>
+        </div>
+        <input type="text" placeholder="Introducir nombre" class="form-control" aria-describedby="icono_nombre" name="nombreRegistro" id="nombre" required>
     </div>
-    <br>
-    <div class="row">
-        <label class="col-sm-4" for="email">Correo electrónico: </label>
-        <input class="col-sm-8" type="email" name="emailRegistro" id="email">
+    <div class="input-group input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="icono_email"><i class="fas fa-at"></i></span>
+        </div>
+        <input type="email" placeholder="Introducir email" class="form-control" aria-describedby="icono_email" name="emailRegistro" id="email" required>
     </div>
-    <br>
-    <div class="row">
-        <label class="col-sm-4" for="contrasena">Contraseña: </label>
-        <input class="col-sm-8" type="password" name="contrasenaRegistro" id="contrasena">
+    <div class="input-group input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="icono_contrasena"><i class="fas fa-key"></i></span>
+        </div>
+        <input type="password" placeholder="Introducir contraseña" class="form-control" aria-describedby="icono_contrasena" name="contrasenaRegistro" id="contrasena" required>
     </div>
-    <br>
+
     <div class="row">
         <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Enviar</button>
     </div>
@@ -42,7 +47,7 @@ if ($registro == "ok"){
 
     echo '<script>
             setTimeout(function() {
-              window.location = "index.php?iniciar_sesion";
+              window.location = "index.php?pagina=iniciar_sesion";
             },800);
           </script>';
 }

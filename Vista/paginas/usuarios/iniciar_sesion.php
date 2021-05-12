@@ -2,20 +2,20 @@
 <hr style="width: 98%;"><br>
 
 <form method="post">
-    <div class="row">
-        <label class="col-sm-4" for="email">Correo electrónico: </label>
-        <input class="col-sm-8" type="email" name="email" id="email">
+
+    <div class="input-group input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="icono_email"><i class="fas fa-at"></i></span>
+        </div>
+        <input type="email" placeholder="Introducir email" class="form-control" aria-describedby="icono_email" name="email" id="email" required>
     </div>
-    <br>
-    <div class="row">
-        <label class="col-sm-4" for="contrasena">Contraseña: </label>
-        <input class="col-sm-8" type="password" name="contrasena" id="contrasena">
+    <div class="input-group input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="icono_contrasena"><i class="fas fa-key"></i></i></span>
+        </div>
+        <input type="password" placeholder="Introducir contraseña" class="form-control" aria-describedby="icono_contrasena" name="contrasena" id="contrasena" required>
     </div>
-    <br>
-    <div class="row">
-        <input class="col-1" type="checkbox" name="recordar" id="recordar">
-        <label class="col-4" for="recordar">Recordar usuario </label>
-    </div>
+
     <br>
 
     <?php
