@@ -60,6 +60,19 @@ Class ModeloUsuarios{
         $consulta = null;
     }
 
+    static public function mdlObtenerUsuarioToken($token){
+
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT * FROM usuarios WHERE token = :token"
+        );
+
+        $consulta->bindParam(":token", $token);
+
+        $consulta->execute();
+        $resultado = $consulta->fetch();
+
+        return $resultado;
+    }
 
     static public function mdlActualizarIntentosFallidos($intentos, $token){
         $consulta = Conexion::conectar()->prepare(
@@ -80,6 +93,63 @@ Class ModeloUsuarios{
             $consulta = null;
             return Conexion::conectar()->errorInfo();
         }
+    }
+
+    public static function mdlActualizarUsuario($datos)
+    {
+
+        if (isset($datos["contrrasena"]))
+        { // Actualizar usuario con nueva contraseña
+            $consulta = Conexion::conectar()->prepare(
+                "UPDATE usuarios SET nombre = :nombre, email = :email, contrasena = :contrasena, fecha_modificacion = :fecha_modificacion  WHERE token = :token"
+            );
+
+            $date = date('Y-m-d H:i:s');
+
+            $consulta->bindParam(":nombre", $datos["nombre"]);
+            $consulta->bindParam(":email", $datos["email"]);
+            $consulta->bindParam(":contrasena", $datos["contrasena"]);
+            $consulta->bindParam(":fecha_modificacion", $date);
+            $consulta->bindParam(":token", $_SESSION["tokenUsuario"]);
+
+
+            if ($consulta->execute())
+            {
+                return true;
+            }
+            else {
+
+                $consulta->close();
+                $consulta = null;
+                return Conexion::conectar()->errorInfo();
+            }
+        }
+        else { // Actualizar usuario sin nueva contraseña
+            $consulta = Conexion::conectar()->prepare(
+                "UPDATE usuarios SET nombre = :nombre, email = :email, fecha_modificacion = :fecha_modificacion  WHERE token = :token"
+            );
+
+            $date = date('Y-m-d H:i:s');
+
+            $consulta->bindParam(":nombre", $datos["nombre"]);
+            $consulta->bindParam(":email", $datos["email"]);
+            $consulta->bindParam(":fecha_modificacion", $date);
+            $consulta->bindParam(":token", $_SESSION["tokenUsuario"]);
+
+
+            if ($consulta->execute())
+            {
+                return true;
+            }
+            else {
+
+                $consulta->close();
+                $consulta = null;
+                return Conexion::conectar()->errorInfo();
+            }
+        }
+
+
     }
 
 }

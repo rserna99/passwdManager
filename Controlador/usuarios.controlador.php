@@ -38,9 +38,46 @@ class ControladorUsuarios{
         return $respuesta;
     }
 
+    public static function ctrActualizarUsuario(){
+
+        if (!(isset($_POST["nombre"]) && $_POST["nombre"] != null) || !(isset($_POST["email"]) && $_POST["email"] != null)){
+            return;
+        }
+        $datos = null;
+
+        if (isset($_POST["contrasena"]) && $_POST["contrasena"] != "")
+        {
+            $contrasenaEncriptada = crypt($_POST["contrasena"], '$2a$07$ghfFdsOgfmdrQxdrtkLxp$');
+
+            $datos = array(
+                "nombre" => $_POST["nombre"],
+                "email" => $_POST["email"],
+                "contrasena" => $contrasenaEncriptada
+            );
+        }
+        else {
+            $datos = array(
+                "nombre" => $_POST["nombre"],
+                "email" => $_POST["email"],
+            );
+        }
+
+        $resultado = ModeloUsuarios::mdlActualizarUsuario($datos);
+
+        return $resultado;
+
+    }
+
     public static function ctrListarUsuarios(){
 
         $resultado = ModeloUsuarios::mdlObtenerUsuarios(null);
+
+        return $resultado;
+    }
+
+    public static function ctrObtenerUsuario($token){
+
+        $resultado = ModeloUsuarios::mdlObtenerUsuarioToken($token);
 
         return $resultado;
     }

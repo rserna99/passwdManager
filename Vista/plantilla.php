@@ -78,6 +78,9 @@ session_start();
             case "iniciar-sesion":
                 include "Vista\paginas\usuarios\iniciar_sesion.php";
                 break;
+            case "editar-usuario":
+                include "Vista\paginas\usuarios\\editar_usuario.php";
+                break;
             case "contrasenas":
                 include "Vista\paginas\contrasenas\listar_contrasenas.php";
                 break;
