@@ -112,6 +112,8 @@ class ControladorUsuarios{
                 }
                 else {
 
+                    echo "<div class=\"alert alert-danger text-center\">Contraseña erronea</div>";
+
                     // Actualizar numero de intentos fallidos
                     if ($usuario["intentos_fallidos"] < 3){
                         $fallos = $usuario["intentos_fallidos"]+1;
@@ -127,6 +129,7 @@ class ControladorUsuarios{
 
 
                 }
+
             }
             else {
 
@@ -138,7 +141,7 @@ class ControladorUsuarios{
                         }
                       </script>';
 
-                echo "<div class=\"alert alert-danger text-center\">Usuario o contraseña incorrecto </div>";
+                echo "<div class=\"alert alert-danger text-center\">Usuario no encontrado </div>";
 
             }
         }
