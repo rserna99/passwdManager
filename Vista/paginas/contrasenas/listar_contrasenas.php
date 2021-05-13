@@ -63,7 +63,7 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
 <hr style="width: 98%">
 <br>
 
-<a class="btn btn-primary" title="Añadir contraseña" href="nueva-contrasena"><i class="fas fa-plus"></i></a>
+<a class="btn btn-primary" title="Añadir contraseña" href="nueva-contrasena"><i class="fas fa-plus"></i> Añadir contraseña</a>
 <br>
 <br>
 <div class="table-responsive">

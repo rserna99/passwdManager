@@ -22,12 +22,19 @@ session_start();
 
     <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Raleway&display=swap" rel="stylesheet">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="Vista/paginas/style.css">
 </head>
 
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Gestor de contraseñas</a>
+    <a class="navbar-brand" href="contrasenas">Gestor de contraseñas</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -38,24 +45,24 @@ session_start();
             if (isset($_SESSION["usuarioIniciado"]) && $_SESSION["usuarioIniciado"] == "ok")
             {
                 echo '<li class="navbar-item">';
-                echo '<a href="contrasenas" class="nav-link">Contraseñas</a>';
+                echo '<a title="Contraseñas" href="contrasenas" class="nav-link">Contraseñas <i class="fas fa-key"></i></a>';
                 echo '</li>';
 
                 echo '<li class="navbar-item">';
-                echo '<a href="index.php?pagina=editar-usuario&token=' . $_SESSION["tokenUsuario"] .'" class="nav-link">Editar usuario</a>';
+                echo '<a title="Editar usuario" href="index.php?pagina=editar-usuario&token=' . $_SESSION["tokenUsuario"] .'" class="nav-link">Editar usuario <i class="fas fa-user-edit"></i></a>';
                 echo '</li>';
 
                 echo '<li class="navbar-item">';
-                echo '<a href="salir" class="nav-link">Salir</a>';
+                echo '<a title="Cerrar sesion" href="salir" class="nav-link">Cerrar sesion <i class="fas fa-sign-out-alt"></i></a>';
                 echo '</li>';
             }
             else {
                 echo '<li class="navbar-item">';
-                echo '<a href="registro" class="nav-link">Registrarse</a>';
+                echo '<a title="Registrar usuario" href="registro" class="nav-link">Registro <i class="fas fa-user-plus"></i></a>';
                 echo '</li>';
 
                 echo '<li class="navbar-item">';
-                echo '<a href="iniciar-sesion" class="nav-link">Iniciar sesion</a>';
+                echo '<a title="Iniciar sesion" href="iniciar-sesion" class="nav-link">Iniciar sesión <i class="fas fa-sign-in-alt"></i></a>';
                 echo '</li>';
             }
             ?>
@@ -65,7 +72,8 @@ session_start();
 
 <br>
 
-<div class="container">
+<div class="container" id="contenido">
+    <br>
     <?php
 
     if (isset($_GET["pagina"])) {

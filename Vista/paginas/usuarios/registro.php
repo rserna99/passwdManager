@@ -23,7 +23,7 @@
     </div>
 
     <div class="row">
-        <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Enviar</button>
+        <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Registrar usuario</button>
     </div>
 </form>
 <br>
