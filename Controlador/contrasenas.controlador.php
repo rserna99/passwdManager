@@ -28,6 +28,14 @@ class ControladorContrasenas{
 
     }
 
+    public static function ctrListarContrasenasServicio($servicio){
+
+        $resultado = ModeloContrasenas::mdlObtenerContrasenasServicio($servicio);
+
+        return $resultado;
+
+    }
+
     public static function ctrModificarContrasena()
     {
         if (isset($_POST["servicio"])) {

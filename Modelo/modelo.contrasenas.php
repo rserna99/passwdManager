@@ -116,4 +116,19 @@ Class ModeloContrasenas{
             return ;
         }
     }
+
+    public static function mdlObtenerContrasenasServicio($servicio)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT * FROM contrasenas WHERE token_usuario = :token_usuario AND servicio = :servicio"
+        );
+        $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
+        $consulta->bindParam(":servicio", $servicio);
+
+        $consulta->execute();
+
+        $resultado = $consulta->fetchAll();
+
+        return $resultado;
+    }
 }

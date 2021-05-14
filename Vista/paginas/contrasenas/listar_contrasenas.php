@@ -7,9 +7,25 @@ ControladorUsuarios::ctrUsuarioIniciado();
 
 $servicios = ControladorUsuarios::ctrObtenerServicios();
 
-$contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
+//$contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
 
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
+
+
+if (isset($_GET["servicio"]))
+{
+    if ($_GET["servicio"] == "todos")
+    {
+        $contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
+    }
+    else{
+        $contrasenas = ControladorContrasenas::ctrListarContrasenasServicio($_GET["servicio"]);
+    }
+}
+else {
+
+    $contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
+}
 
 ?>
 
@@ -58,6 +74,22 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
         document.body.removeChild(temp);
     }
 
+    function filtrarServicio(){
+
+        var servicio =document.getElementById("filtrar-servicio").value;
+
+        window.location = "index.php?pagina=contrasenas&servicio=" + servicio;
+
+    }
+
+    function paginarNumeroContrasenas() {
+        var numeroContrasenas =document.getElementById("num-contrasenas").value;
+
+        alert("Numero de contraseñas por pagina: " + numeroContrasenas);
+
+
+    }
+
 
 </script>
 
@@ -76,7 +108,7 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
         <div class="row">
             <div class="px-2">
                 <label for="num-contrasenas">Mostrar:</label>
-                <select name="num-contrasenas" id="num-contrasenas">
+                <select onchange="paginarNumeroContrasenas()" name="num-contrasenas" id="num-contrasenas">
                     <option value="4">4</option>
                     <option value="8" selected>8</option>
                     <option value="16">16</option>
@@ -86,10 +118,16 @@ $actualizar = ControladorContrasenas::ctrModificarContrasena();
 
             <div class="px-2">
                 <label for="filtrar-servicio">Servicio</label>
-                <select name="servicio" id="filtrar-servicio">
+                <select onchange="filtrarServicio()" onselect="filtrarServicio()" name="servicio" id="filtrar-servicio">
                     <option value="todos">Todos</option>
                     <?php foreach ($servicios as $key => $value):?>
-                        <option value="<?php echo $value["servicio"]; ?>"><?php echo $value["servicio"]; ?></option>
+                        <option value="<?php echo $value["servicio"]; ?>"
+                            <?php
+                            if (isset($_GET["servicio"]) && $_GET["servicio"] == $value["servicio"]) {
+                                echo "selected";
+                            }
+                            ?>
+                        ><?php echo $value["servicio"]; ?></option>
                     <?php endforeach;?>
                 </select>
             </div>
