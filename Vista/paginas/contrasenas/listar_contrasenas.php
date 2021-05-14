@@ -6,9 +6,6 @@ require "Controlador/usuarios.controlador.php";
 ControladorUsuarios::ctrUsuarioIniciado();
 
 $servicios = ControladorUsuarios::ctrObtenerServicios();
-
-//$contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
-
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
 
 
@@ -26,6 +23,10 @@ else {
 
     $contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
 }
+
+$contrasenasPorPagina = 4;
+$numeroContrasenas = count($contrasenas);
+$numeroPaginas = ceil($numeroContrasenas / $contrasenasPorPagina);
 
 ?>
 
@@ -136,7 +137,6 @@ else {
 </div>
 
 <br>
-<br>
 <div class="table-responsive">
     <table class="table table-striped ">
         <thead>
@@ -203,15 +203,67 @@ else {
         </tbody>
     </table>
 </div>
-<nav aria-label="Seleccionar pagina">
+
+<nav aria-label="Seleccionar pagina" >
     <ul class="pagination justify-content-end">
-        <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+        <?php
+        if (isset($_GET["servicio"])){
 
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+            if (isset($_GET["pagina-numero"])) {
+                echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenasservicio=' .$_GET["servicio"] .'&pagina-numero=' . $_GET["pagina-numero"]-1 .'">Anterior</a></li>';
+            }
+            else {
+                echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenasservicio=' .$_GET["servicio"] .'&pagina-numero=#">Anterior</a></li>';
+            }
 
-        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+
+            for ($i = 1; $i <= $numeroPaginas; $i++){
+                echo '<li class="page-item"><a class="page-link" href=index.php?pagina=contrasenas&servicio=' .$_GET["servicio"] .'&pagina-numero=' . $i .'>' . $i . '</a></li>';
+            }
+
+
+            if (isset($_GET["pagina-numero"])){
+                echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenasservicio=' .$_GET["servicio"] .'&pagina-numero=' . $_GET["pagina-numero"]+1 .'">Siguiente</a></li>';
+            }
+            else
+            {
+                echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenasservicio=' .$_GET["servicio"] .'&pagina-numero=#">Siguiente</a></li>';
+            }
+
+        }
+        else
+        {
+            $paginaAnterior = 0;
+            $paginaSiguiente = 1;
+
+            if (isset($_GET["pagina-numero"])){
+                if ($_GET["pagina-numero"]-1 == -1) {
+                    $paginaAnterior = 0;
+                }
+                else {
+                    $paginaAnterior = $_GET["pagina-numero"]-1;
+                }
+
+                if ($_GET["pagina-numero"]+1 > $numeroPaginas) {
+                    $paginaSiguiente = $_GET["pagina-numero"];
+                }
+                else {
+                    $paginaSiguiente = $_GET["pagina-numero"]+1;
+                }
+            }
+
+
+            echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $paginaAnterior .'">Anterior</a></li>';
+
+            for ($i = 1; $i <= $numeroPaginas; $i++){
+                echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $i .'">' . $i . '</a></li>';
+            }
+
+            echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $paginaSiguiente .'">Siguiente</a></li>';
+
+        }
+
+        ?>
     </ul>
 </nav>
 <br>
