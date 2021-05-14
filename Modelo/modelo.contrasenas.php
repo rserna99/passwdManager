@@ -131,4 +131,20 @@ Class ModeloContrasenas{
 
         return $resultado;
     }
+
+    public static function mdlObtenerContrasenasPaginadas($registroInicio, $registroFin)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT * FROM contrasenas WHERE token_usuario = :token_usuario LIMIT :inicio , :fin"
+        );
+        $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
+        $consulta->bindParam(":inicio", $registroInicio, PDO::PARAM_INT);
+        $consulta->bindParam(":fin", $registroFin, PDO::PARAM_INT);
+
+        $consulta->execute();
+
+        $resultado = $consulta->fetchAll();
+
+        return $resultado;
+    }
 }
