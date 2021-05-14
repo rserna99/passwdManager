@@ -148,8 +148,28 @@ Class ModeloUsuarios{
                 return Conexion::conectar()->errorInfo();
             }
         }
-
-
     }
+
+    public static function mdlObtenerServicios()
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT DISTINCT servicio FROM contrasenas WHERE token_usuario = :token"
+        );
+
+        $consulta->bindParam(":token", $_SESSION["tokenUsuario"]);
+
+
+        if ($consulta->execute())
+        {
+            return $consulta->fetchAll();
+        }
+        else {
+
+            $consulta->close();
+            $consulta = null;
+            return Conexion::conectar()->errorInfo();
+        }
+    }
+
 
 }

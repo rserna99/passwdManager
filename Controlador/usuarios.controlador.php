@@ -82,6 +82,13 @@ class ControladorUsuarios{
         return $resultado;
     }
 
+    public static function ctrObtenerServicios()
+    {
+        $resultado = ModeloUsuarios::mdlObtenerServicios();
+
+        return $resultado;
+    }
+
     public function ctrIniciarSesion()
     {
         if (isset($_POST["email"])){
