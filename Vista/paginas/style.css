@@ -5,14 +5,18 @@ body{
 *{
     font-family: 'Raleway', sans-serif;
 }
+
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Kanit', sans-serif;
     font-weight: bold;
 }
 
+#titulo-navbar{
+    font-family: 'Kanit', sans-serif;
+}
 
 #contenido {
     background-color: white;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 1px 3px 25px 2px #888888;
 }

@@ -34,7 +34,7 @@ session_start();
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" href="contrasenas">Gestor de contraseñas</a>
+    <a class="navbar-brand" href="contrasenas" id="titulo-navbar">Gestor de contraseñas</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -81,33 +81,34 @@ session_start();
         switch ($_GET["pagina"]) {
 
             case "registro":
-                include "Vista\paginas\usuarios\\registro.php";
+                include "Vista/paginas/usuarios/registro.php";
                 break;
             case "iniciar-sesion":
-                include "Vista\paginas\usuarios\iniciar_sesion.php";
+                include "Vista/paginas/usuarios/iniciar_sesion.php";
                 break;
             case "editar-usuario":
-                include "Vista\paginas\usuarios\\editar_usuario.php";
+                include "Vista/paginas/usuarios/editar_usuario.php";
                 break;
             case "contrasenas":
-                include "Vista\paginas\contrasenas\listar_contrasenas.php";
+                include "Vista/paginas/contrasenas/listar_contrasenas.php";
                 break;
             case "nueva-contrasena":
-                include "Vista\paginas\contrasenas\\crear_contrasena.php";
+                include "Vista/paginas/contrasenas/crear_contrasena.php";
                 break;
             case "editar-contrasena":
-                include "Vista\paginas\contrasenas\\editar_contrasenas.php";
+                include "Vista/paginas/contrasenas/editar_contrasenas.php";
                 break;
             case "salir":
-                include "Vista\paginas\usuarios\salir.php";
+                include "Vista/paginas/usuarios/salir.php";
                 break;
             default:
-                echo "<h1>Error 404: Pagina no valida</h1>";
+                include "Vista/paginas/error404.php";
+                break;
 
         }
     }
     else {
-        include "Vista\paginas\usuarios\iniciar_sesion.php";
+        include "Vista/paginas/usuarios/iniciar_sesion.php";
     }
 
     ?>

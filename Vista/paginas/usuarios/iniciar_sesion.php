@@ -1,3 +1,22 @@
+<script>
+    function mostrarContrasena() {
+
+        var btnMostrar = document.getElementById("mostrar_contrasena");
+        var contrasena  = document.getElementById("contrasena");
+
+
+        if (contrasena.type === "password") {
+            contrasena.type = "text";
+            btnMostrar.setAttribute("class", "fas fa-eye-slash");
+        }
+        else {
+            contrasena.type = "password";
+            btnMostrar.setAttribute("class", "fas fa-eye");
+        }
+    }
+</script>
+
+
 <h2>Iniciar sesión</h2>
 <hr style="width: 98%;"><br>
 
@@ -14,6 +33,9 @@
             <span class="input-group-text" id="icono_contrasena"><i class="fas fa-key"></i></i></span>
         </div>
         <input type="password" placeholder="Introducir contraseña" class="form-control" aria-describedby="icono_contrasena" name="contrasena" id="contrasena" required>
+        <div class="input-group-append">
+            <button type="button" title="Mostrar contraseña" onclick='mostrarContrasena()' class="btn btn-outline-secondary"><i id="mostrar_contrasena" class="fas fa-eye"></i></button>
+        </div>
     </div>
 
     <br>
