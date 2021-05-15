@@ -132,20 +132,39 @@ Class ModeloContrasenas{
         return $resultado;
     }
 
-    public static function mdlObtenerContrasenasPaginadas($registroInicio, $numeroRegistros)
+    public static function mdlObtenerContrasenasPaginadas($registroInicio, $numeroRegistros, $servicio)
     {
-        $consulta = Conexion::conectar()->prepare(
-            "SELECT * FROM contrasenas WHERE token_usuario = :token_usuario LIMIT :inicio , :numeroRegistros"
-        );
-        $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
-        $consulta->bindParam(":inicio", $registroInicio, PDO::PARAM_INT);
-        $consulta->bindParam(":numeroRegistros", $numeroRegistros, PDO::PARAM_INT);
+        if ($servicio  == null){
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM contrasenas WHERE token_usuario = :token_usuario  LIMIT :registroInicio , :numeroRegistros"
+            );
+            $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
+            $consulta->bindParam(":registroInicio", $registroInicio, PDO::PARAM_INT);
+            $consulta->bindParam(":numeroRegistros", $numeroRegistros, PDO::PARAM_INT);
 
 
-        $consulta->execute();
+            $consulta->execute();
 
-        $resultado = $consulta->fetchAll();
+            $resultado = $consulta->fetchAll();
 
-        return $resultado;
+            return $resultado;
+        }
+        else {
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM contrasenas WHERE token_usuario = :token_usuario AND servicio = :servicio LIMIT :registroInicio , :numeroRegistros"
+            );
+            $consulta->bindParam(":token_usuario", $_SESSION["tokenUsuario"]);
+            $consulta->bindParam(":registroInicio", $registroInicio, PDO::PARAM_INT);
+            $consulta->bindParam(":servicio", $servicio, PDO::PARAM_STR);
+            $consulta->bindParam(":numeroRegistros", $numeroRegistros, PDO::PARAM_INT);
+
+
+            $consulta->execute();
+
+            $resultado = $consulta->fetchAll();
+
+            return $resultado;
+        }
+
     }
 }

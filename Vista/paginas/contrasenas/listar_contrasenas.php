@@ -9,33 +9,29 @@ $servicios = ControladorUsuarios::ctrObtenerServicios();
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
 
 
-if (isset($_GET["servicio"]))
-{
-    if ($_GET["servicio"] == "todos")
-    {
-        $contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
-    }
-    else{
-        $contrasenas = ControladorContrasenas::ctrListarContrasenasServicio($_GET["servicio"]);
-    }
-}
-else {
 
-    $contrasenas = ControladorContrasenas::ctrListarContrasenas(null);
-}
+$contrasenas = (isset($_GET["servicio"]) && $_GET["servicio"] != "todos") ?
+    ControladorContrasenas::ctrListarContrasenasServicio($_GET["servicio"]) :
+    ControladorContrasenas::ctrListarContrasenas(null);
 
-$contrasenasPorPagina = 4;
+$contrasenasPorPagina = (isset($_POST["contrasenasPorPagina"])) ?
+    $_POST["contrasenasPorPagina"] :
+    8;
+
+
 $numeroContrasenas = count($contrasenas);
 $numeroPaginas = ceil($numeroContrasenas / $contrasenasPorPagina);
 
-if (isset($_GET["pagina-numero"])){
-    $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($contrasenasPorPagina, $_GET["pagina-numero"]);
-}
-else {
-    $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($contrasenasPorPagina, 1);
-}
 
+$paginaNumero = (isset($_GET["pagina-numero"])) ?
+    $_GET["pagina-numero"] :
+    1;
 
+$servicio = (isset($_GET["servicio"])) ?
+    $_GET["servicio"]:
+    "todos";
+
+$contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($contrasenasPorPagina, $paginaNumero, $servicio);
 
 ?>
 
@@ -95,7 +91,11 @@ else {
     function paginarNumeroContrasenas() {
         var numeroContrasenas =document.getElementById("num-contrasenas").value;
 
-        alert("Numero de contraseñas por pagina: " + numeroContrasenas);
+        // Enviar mediante post el numero de las contrasenas por pagina
+
+        sessionStorage.setItem("contrasenasPorPagina", numeroContrasenas)
+
+        //alert("Numero de contraseñas por pagina: " + numeroContrasenas);
 
 
     }
@@ -213,45 +213,58 @@ else {
     </table>
 </div>
 
-<nav aria-label="Seleccionar pagina" >
-    <ul class="pagination pagination-sm justify-content-end">
-        <?php
+<?php
+
+if ($numeroPaginas > 1){
+    echo '<nav aria-label="Seleccionar pagina" >';
+    echo '<ul class="pagination pagination-sm justify-content-end">';
 
 
-        if (isset($_GET["pagina-numero"]))
-        {
-            $numeroPaginaSiguiente = ($_GET["pagina-numero"] === 1) ? 2: $_GET["pagina-numero"]+1;
-            $numeroPaginaAnterior = ($_GET["pagina-numero"] ===  $numeroPaginas) ? $_GET["pagina-numero"]: $_GET["pagina-numero"]-1;
-        }
-        else {
-            $numeroPaginaAnterior = 1;
-            $numeroPaginaSiguiente = 2;
-        }
+    if (isset($_GET["pagina-numero"]))
+    {
+        $numeroPaginaSiguiente = ($_GET["pagina-numero"] === 1) ?
+            2:
+            $_GET["pagina-numero"]+1;
 
-        $urlParteServicio = (isset($_GET["servicio"])) ? '&servicio=' . $_GET["servicio"] : '';
+        $numeroPaginaAnterior = ($_GET["pagina-numero"] ===  $numeroPaginas) ?
+            $_GET["pagina-numero"]:
+            $_GET["pagina-numero"]-1;
+    }
+    else {
+        $numeroPaginaAnterior = 1;
+        $numeroPaginaSiguiente = 2;
+    }
 
-        $urlParteNumeroPagina = (isset($_GET["pagina-numero"])) ? '&pagina-numero=' : '&pagina-numero=';
-
-        $urlPagina = "index.php?pagina=contrasenas" . $urlParteServicio . $urlParteNumeroPagina;
-        $urlPaginaAnterior = $urlPagina . $numeroPaginaAnterior;
-        $urlPaginaSiguiente = $urlPagina . $numeroPaginaSiguiente;
-
-        $deshabilitarAnterior = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == 1 ) || !isset($_GET["pagina-numero"])) ? 'disabled' : '';
-        $deshabilitarSiguiente = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $numeroPaginas ))? 'disabled': '';
+    $urlParteServicio = (isset($_GET["servicio"])) ?
+        '&servicio=' . $_GET["servicio"] :
+        '';
 
 
-        echo '<li class="page-item ' . $deshabilitarAnterior .'"><a class="page-link" href="' . $urlPaginaAnterior . '">Anterior</a></li>';
+    $urlPagina = "index.php?pagina=contrasenas" . $urlParteServicio . '&pagina-numero=';
+    $urlPaginaAnterior = $urlPagina . $numeroPaginaAnterior;
+    $urlPaginaSiguiente = $urlPagina . $numeroPaginaSiguiente;
 
-        for ($i = 1; $i <= $numeroPaginas; $i++){
-            $paginaActiva = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $i) || !isset($_GET["pagina-numero"]) && $i == 1) ? 'active': '';
-            echo '<li class="page-item ' . $paginaActiva .'"><a class="page-link" href="' . $urlPagina . $i . '">' . $i . '</a></li>';
-        }
+    $deshabilitarAnterior = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == 1 ) || !isset($_GET["pagina-numero"])) ?
+        'disabled' :
+        '';
+    $deshabilitarSiguiente = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $numeroPaginas ))?
+        'disabled':
+        '';
 
-        echo '<li class="page-item ' . $deshabilitarSiguiente .'"><a class="page-link" href="' . $urlPaginaSiguiente . '">Siguiente</a></li>';
 
+    echo '<li class="page-item ' . $deshabilitarAnterior .'"><a class="page-link" href="' . $urlPaginaAnterior . '">Anterior</a></li>';
 
+    for ($i = 1; $i <= $numeroPaginas; $i++){
+        $paginaActiva = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $i) || !isset($_GET["pagina-numero"]) && $i == 1) ? 'active': '';
+        echo '<li class="page-item ' . $paginaActiva .'"><a class="page-link" href="' . $urlPagina . $i . '">' . $i . '</a></li>';
+    }
 
-        ?>
-    </ul>
-</nav>
+    echo '<li class="page-item ' . $deshabilitarSiguiente .'"><a class="page-link" href="' . $urlPaginaSiguiente . '">Siguiente</a></li>';
+
+    echo '</ul>';
+    echo '</nav>';
+}
+
+?>
+
 <br>
