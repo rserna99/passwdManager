@@ -74,20 +74,16 @@ class ControladorContrasenas{
 
     public static function ctrListarContrasenasPaginadas($contrasenasPorPagina,  $pagina)
     {
-        echo "pagina " . $pagina;
         $registroInicio = 0;
-        $registroFin = $contrasenasPorPagina;
+        $numeroRegistros = $contrasenasPorPagina;
 
         for ($i = 1; $i < $pagina; $i++){
             $registroInicio = $registroInicio + $contrasenasPorPagina;
-            $registroFin = $registroFin + $contrasenasPorPagina;
+
         }
 
-        echo "inicio " . $registroInicio;
-        echo "fin " . $registroFin;
+        $respuesta = ModeloContrasenas::mdlObtenerContrasenasPaginadas($registroInicio, $numeroRegistros);
 
-
-        $respuesta = ModeloContrasenas::mdlObtenerContrasenasPaginadas($registroInicio, $registroFin);
         return $respuesta;
 
     }

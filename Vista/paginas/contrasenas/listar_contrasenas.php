@@ -216,99 +216,41 @@ else {
 <nav aria-label="Seleccionar pagina" >
     <ul class="pagination justify-content-end">
         <?php
-        if (isset($_GET["servicio"])){
 
 
-            $paginaAnterior = 1;
-            $paginaSiguiente = 1;
 
-            if (isset($_GET["pagina-numero"])){
-                if ($_GET["pagina-numero"]-1 == -1) {
-                    $paginaAnterior = 1;
-                }
-                else {
-                    $paginaAnterior = $_GET["pagina-numero"]-1;
-                }
-
-                if ($_GET["pagina-numero"]+1 > $numeroPaginas) {
-                    $paginaSiguiente = $_GET["pagina-numero"];
-                }
-                else {
-                    $paginaSiguiente = $_GET["pagina-numero"]+1;
-                }
-            }
-
-
-            echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&servicio=' .$_GET["servicio"] .'&pagina-numero=' . $paginaAnterior .'">Anterior</a></li>';
-
-            for ($i = 1; $i <= $numeroPaginas; $i++){
-                if (isset($_GET["pagina-numero"])){
-                    if ( $i == $_GET["pagina-numero"]){
-                        echo '<li class="page-item active"><a class="page-link" href="index.php?pagina=contrasenas&servicio=' .$_GET["servicio"] .'&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                    else {
-                        echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&servicio=' .$_GET["servicio"] .'&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                }
-                else{
-                    if ($i == 1){
-                        echo '<li class="page-item active"><a class="page-link" href="index.php?pagina=contrasenas&servicio=' .$_GET["servicio"] .'&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                    else {
-                        echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&servicio=' .$_GET["servicio"] .'&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                }
-            }
-
-            echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&servicio=' .$_GET["servicio"] .'&pagina-numero=' . $paginaSiguiente .'">Siguiente</a></li>';
-
-        }
-        else
+        if (isset($_GET["pagina-numero"]))
         {
-            $paginaAnterior = 1;
-            $paginaSiguiente = 1;
-
-            if (isset($_GET["pagina-numero"])){
-                if ($_GET["pagina-numero"]-1 == -1) {
-                    $paginaAnterior = 1;
-                }
-                else {
-                    $paginaAnterior = $_GET["pagina-numero"]-1;
-                }
-
-                if ($_GET["pagina-numero"]+1 > $numeroPaginas) {
-                    $paginaSiguiente = $_GET["pagina-numero"];
-                }
-                else {
-                    $paginaSiguiente = $_GET["pagina-numero"]+1;
-                }
-            }
-
-
-            echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $paginaAnterior .'">Anterior</a></li>';
-
-            for ($i = 1; $i <= $numeroPaginas; $i++){
-                if (isset($_GET["pagina-numero"])){
-                    if ( $i == $_GET["pagina-numero"]){
-                        echo '<li class="page-item active"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                    else {
-                        echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                }
-                else{
-                    if ($i == 1){
-                        echo '<li class="page-item active"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                    else {
-                        echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $i .'">' . $i . '</a></li>';
-                    }
-                }
-            }
-
-            echo '<li class="page-item"><a class="page-link" href="index.php?pagina=contrasenas&pagina-numero=' . $paginaSiguiente .'">Siguiente</a></li>';
-
+            $numeroPaginaSiguiente = ($_GET["pagina-numero"] === 1) ? 2: $_GET["pagina-numero"]+1;
+            $numeroPaginaAnterior = ($_GET["pagina-numero"] ===  $numeroPaginas) ? $_GET["pagina-numero"]: $_GET["pagina-numero"]-1;
         }
+        else {
+            $numeroPaginaAnterior = 1;
+            $numeroPaginaSiguiente = 2;
+        }
+
+        $urlParteServicio = (isset($_GET["servicio"])) ? '&servicio=' . $_GET["servicio"] : '';
+
+        $urlParteNumeroPagina = (isset($_GET["pagina-numero"])) ? '&pagina-numero=' : '&pagina-numero=';
+
+        $urlPagina = "index.php?pagina=contrasenas" . $urlParteServicio . $urlParteNumeroPagina;
+        $urlPaginaAnterior = $urlPagina . $numeroPaginaAnterior;
+        $urlPaginaSiguiente = $urlPagina . $numeroPaginaSiguiente;
+
+        $deshabilitarAnterior = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == 1 ) || !isset($_GET["pagina-numero"])) ? 'disabled' : '';
+        $deshabilitarSiguiente = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $numeroPaginas ))? 'disabled': '';
+
+
+        echo '<li class="page-item ' . $deshabilitarAnterior .'"><a class="page-link" href="' . $urlPaginaAnterior . '">Anterior</a></li>';
+
+        for ($i = 1; $i <= $numeroPaginas; $i++){
+            $paginaActiva = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $i) || !isset($_GET["pagina-numero"]) && $i == 1) ? 'active': '';
+            echo '<li class="page-item ' . $paginaActiva .'"><a class="page-link" href="' . $urlPagina . $i . '">' . $i . '</a></li>';
+        }
+
+        echo '<li class="page-item ' . $deshabilitarSiguiente .'"><a class="page-link" href="' . $urlPaginaSiguiente . '">Siguiente</a></li>';
+
+
 
         ?>
     </ul>
