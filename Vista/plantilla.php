@@ -114,4 +114,6 @@ session_start();
     ?>
 </div>
 </body>
+<script rel="script" src='Vista/js/contrasenas.js'></script>
+<script rel="script" src='Vista/js/usuarios.js'></script>
 </html>

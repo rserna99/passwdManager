@@ -11,35 +11,38 @@ if (isset($_GET["token"])){
 
 ?>
 
-<h2>Editar usuario</h2>
-<hr style="width: 98%;"><br>
+    <h2>Editar usuario</h2>
+    <hr style="width: 98%;"><br>
 
-<form method="post">
+    <form method="post">
 
-    <div class="input-group input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="icono_nombre"><i class="fas fa-user"></i></span>
+        <div class="input-group input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="icono_nombre"><i class="fas fa-user"></i></span>
+            </div>
+            <input value="<?php echo $usuario["nombre"]; ?>" type="text" placeholder="Introducir nombre" class="form-control" aria-describedby="icono_nombre" name="nombre" id="nombre">
         </div>
-        <input value="<?php echo $usuario["nombre"]; ?>" type="text" placeholder="Introducir nombre" class="form-control" aria-describedby="icono_nombre" name="nombre" id="nombre">
-    </div>
-    <div class="input-group input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="icono_email"><i class="fas fa-at"></i></span>
+        <div class="input-group input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="icono_email"><i class="fas fa-at"></i></span>
+            </div>
+            <input value="<?php echo $usuario["email"]; ?>" type="email" placeholder="Introducir email" class="form-control" aria-describedby="icono_email" name="email" id="email">
         </div>
-        <input value="<?php echo $usuario["email"]; ?>" type="email" placeholder="Introducir email" class="form-control" aria-describedby="icono_email" name="email" id="email">
-    </div>
-    <div class="input-group input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="icono_contrasena"><i class="fas fa-key"></i></span>
+        <div class="input-group input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="icono_contrasena"><i class="fas fa-key"></i></span>
+            </div>
+            <input type="password" placeholder="Introducir contraseña" class="form-control" aria-describedby="icono_contrasena" name="contrasena" id="contrasena">
+            <div class="input-group-append">
+                <button type="button" title="Mostrar contraseña" onclick='mostrarContrasena()' class="btn btn-outline-secondary"><i id="mostrar_contrasena" class="fas fa-eye"></i></button>
+            </div>
         </div>
-        <input type="password" placeholder="Introducir contraseña" class="form-control" aria-describedby="icono_contrasena" name="contrasena" id="contrasena">
-    </div>
 
-    <div class="row">
-        <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Enviar</button>
-    </div>
-</form>
-<br>
+        <div class="row">
+            <button class="btn btn-primary col-sm-2 offset-sm-5" type="submit" id="btnEnvio">Enviar</button>
+        </div>
+    </form>
+    <br>
 
 
 

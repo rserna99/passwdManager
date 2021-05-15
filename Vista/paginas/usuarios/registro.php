@@ -1,21 +1,3 @@
-<script>
-    function mostrarContrasena() {
-
-        var btnMostrar = document.getElementById("mostrar_contrasena");
-        var contrasena  = document.getElementById("contrasena");
-
-
-        if (contrasena.type === "password") {
-            contrasena.type = "text";
-            btnMostrar.setAttribute("class", "fas fa-eye-slash");
-        }
-        else {
-            contrasena.type = "password";
-            btnMostrar.setAttribute("class", "fas fa-eye");
-        }
-    }
-</script>
-
 <h2>Registrar usuario</h2>
 <hr style="width: 98%;"><br>
 

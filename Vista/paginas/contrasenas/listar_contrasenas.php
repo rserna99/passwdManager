@@ -9,7 +9,6 @@ $servicios = ControladorUsuarios::ctrObtenerServicios();
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
 
 
-
 $contrasenas = (isset($_GET["servicio"]) && $_GET["servicio"] != "todos") ?
     ControladorContrasenas::ctrListarContrasenasServicio($_GET["servicio"]) :
     ControladorContrasenas::ctrListarContrasenas(null);
@@ -35,73 +34,7 @@ $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($c
 
 ?>
 
-<script>
-    function mostrarContrasena($token) {
 
-        var btnMostrar = document.getElementById("mostrar_contrasena-" + $token);
-        var contrasena  = document.getElementById("contrasena-" + $token);
-
-
-        if (contrasena.type === "password") {
-            contrasena.type = "text";
-            btnMostrar.setAttribute("class", "fas fa-eye-slash");
-        }
-        else {
-            contrasena.type = "password";
-            btnMostrar.setAttribute("class", "fas fa-eye");
-        }
-    }
-
-    function copiarContrasena(token) {
-
-        var inputContrasena  = document.getElementById("contrasena-" + token);
-
-        copiarPortapapeles(inputContrasena.value);
-
-        alert("Contraseña copiada al portapapeles");
-    }
-
-    function copiarUsuario(token) {
-
-        var inputUsuario  = document.getElementById("usuario-" + token);
-
-        copiarPortapapeles(inputUsuario.value);
-
-        alert("Usuario copiado al portapapeles");
-
-    }
-
-    function copiarPortapapeles(string) {
-        const temp = document.createElement('textarea');
-        temp.value = string;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-    }
-
-    function filtrarServicio(){
-
-        var servicio =document.getElementById("filtrar-servicio").value;
-
-        window.location = "index.php?pagina=contrasenas&servicio=" + servicio;
-
-    }
-
-    function paginarNumeroContrasenas() {
-        var numeroContrasenas =document.getElementById("num-contrasenas").value;
-
-        // Enviar mediante post el numero de las contrasenas por pagina
-
-        sessionStorage.setItem("contrasenasPorPagina", numeroContrasenas)
-
-        //alert("Numero de contraseñas por pagina: " + numeroContrasenas);
-
-
-    }
-
-
-</script>
 
 <h2>Listado de contraseñas</h2>
 <hr style="width: 98%">
@@ -109,25 +42,15 @@ $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($c
 
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-10">
         <a class="btn btn-primary" title="Añadir contraseña" href="nueva-contrasena"><i class="fas fa-plus"></i> Añadir contraseña</a>
     </div>
 
-    <div class="col-4 offset-4">
+    <div class="col align-self-end">
 
         <div class="row">
             <div class="px-2">
-                <label for="num-contrasenas">Mostrar:</label>
-                <select onchange="paginarNumeroContrasenas()" name="num-contrasenas" id="num-contrasenas">
-                    <option value="4">4</option>
-                    <option value="8" selected>8</option>
-                    <option value="16">16</option>
-                    <option value="todas">Todas</option>
-                </select>
-            </div>
-
-            <div class="px-2">
-                <label for="filtrar-servicio">Servicio</label>
+                <label class="" for="filtrar-servicio">Servicio</label>
                 <select onchange="filtrarServicio()" onselect="filtrarServicio()" name="servicio" id="filtrar-servicio">
                     <option value="todos">Todos</option>
                     <?php foreach ($servicios as $key => $value):?>
