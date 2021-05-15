@@ -214,9 +214,8 @@ else {
 </div>
 
 <nav aria-label="Seleccionar pagina" >
-    <ul class="pagination justify-content-end">
+    <ul class="pagination pagination-sm justify-content-end">
         <?php
-
 
 
         if (isset($_GET["pagina-numero"]))
