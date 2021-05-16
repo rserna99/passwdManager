@@ -45,6 +45,10 @@ class ControladorUsuarios{
         }
         $datos = null;
 
+        $token = (isset($_POST["token"]))?
+            $_POST["token"]:
+            $_SESSION["tokenUsuario"];
+
         if (isset($_POST["contrasena"]) && $_POST["contrasena"] != "")
         {
             $contrasenaEncriptada = crypt($_POST["contrasena"], '$2a$07$ghfFdsOgfmdrQxdrtkLxp$');
@@ -52,6 +56,7 @@ class ControladorUsuarios{
             $datos = array(
                 "nombre" => $_POST["nombre"],
                 "email" => $_POST["email"],
+                "token" => $token,
                 "contrasena" => $contrasenaEncriptada
             );
         }
@@ -59,12 +64,13 @@ class ControladorUsuarios{
             $datos = array(
                 "nombre" => $_POST["nombre"],
                 "email" => $_POST["email"],
+                "token" => $token
             );
         }
 
-        $resultado = ModeloUsuarios::mdlActualizarUsuario($datos);
+        ModeloUsuarios::mdlActualizarUsuario($datos);
 
-        return $resultado;
+        return $token;
 
     }
 

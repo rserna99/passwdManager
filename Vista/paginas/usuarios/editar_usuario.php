@@ -36,6 +36,7 @@ if (isset($_GET["token"])){
             <div class="input-group-append">
                 <button type="button" title="Mostrar contraseña" onclick='mostrarContrasena()' class="btn btn-outline-secondary"><i id="mostrar_contrasena" class="fas fa-eye"></i></button>
             </div>
+            <input type="hidden" value="<?php echo $usuario["token"]; ?>" name="token">
         </div>
 
         <div class="row">
@@ -52,6 +53,8 @@ if (isset($_GET["token"])){
 $registro = ControladorUsuarios::ctrActualizarUsuario();
 
 if ($registro){
+
+
     echo "<script>
         if (window.history.replaceState){
             window.history.replaceState(null, null, window.location.href);
@@ -59,11 +62,17 @@ if ($registro){
     </script>";
     echo '<div class="alert alert-success" role="alert">Usuario actualizado</div>';
 
+    $location = ($registro == $_SESSION["tokenUsuario"])?
+        "contrasenas" :
+        "administrar-usuarios";
+
     echo '<script>
             setTimeout(function() {
-              window.location = "contrasenas";
+              window.location = "' . $location . '";
             },800);
           </script>';
+
+    /**/
 }
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';

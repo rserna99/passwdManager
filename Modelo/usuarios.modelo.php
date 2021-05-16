@@ -110,7 +110,7 @@ Class ModeloUsuarios{
             $consulta->bindParam(":email", $datos["email"]);
             $consulta->bindParam(":contrasena", $datos["contrasena"]);
             $consulta->bindParam(":fecha_modificacion", $date);
-            $consulta->bindParam(":token", $_SESSION["tokenUsuario"]);
+            $consulta->bindParam(":token", $datos["token"]);
 
 
             if ($consulta->execute())
@@ -134,7 +134,7 @@ Class ModeloUsuarios{
             $consulta->bindParam(":nombre", $datos["nombre"]);
             $consulta->bindParam(":email", $datos["email"]);
             $consulta->bindParam(":fecha_modificacion", $date);
-            $consulta->bindParam(":token", $_SESSION["tokenUsuario"]);
+            $consulta->bindParam(":token", $datos["token"]);
 
 
             if ($consulta->execute())
