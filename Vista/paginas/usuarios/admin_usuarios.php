@@ -18,7 +18,7 @@ $numeroUsuarios = count($usuarios);
 <br>
 
 <div class="col-10">
-    <a class="btn btn-primary" title="Añadir usuario" href="nueva-usuario"><i class="fas fa-plus"></i> Añadir usuario </a>
+    <a class="btn btn-primary" title="Añadir usuario" href="registro"><i class="fas fa-user-plus"></i> Añadir usuario </a>
 </div>
 <br>
 <table class="table table-striped table-responsive">
@@ -43,11 +43,16 @@ $numeroUsuarios = count($usuarios);
         <td>
             <div class="btn-group">
                 <div class="px-1">
-                    <a title="Editar usuario" href="" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
+                    <a title="Editar usuario" href="index.php?pagina=editar-usuario&token=<?php echo $usuario["token"]; ?>" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
                 </div>
                 <form method="post">
                     <input type="hidden" value="<?php echo $usuario["token"]; ?>" name="borrarUsuarioId">
                     <button title="Borrar usuario" type="submit" class="btn btn-danger"><i class="fas fa-user-minus"></i></i></button>
+
+                    <?php
+                    $eliminar = $controladorUsuarios::ctrBorrarUsuario();
+
+                    ?>
                 </form>
             </div>
         </td>

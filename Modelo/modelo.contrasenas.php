@@ -112,8 +112,7 @@ Class ModeloContrasenas{
 
             $consulta->close();
             $consulta = null;
-            //return Conexion::conectar()->errorInfo();
-            return ;
+            return Conexion::conectar()->errorInfo();
         }
     }
 

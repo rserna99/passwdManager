@@ -171,5 +171,25 @@ Class ModeloUsuarios{
         }
     }
 
+    public static function mdlBorrarUsuarios($token)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "DELETE FROM `usuarios` WHERE token = :token"
+        );
+
+        $consulta->bindParam(":token", $token);
+
+        if ($consulta->execute())
+        {
+            return true;
+        }
+        else {
+
+            $consulta->close();
+            $consulta = null;
+            return Conexion::conectar()->errorInfo();
+        }
+    }
+
 
 }

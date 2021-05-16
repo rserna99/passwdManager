@@ -89,6 +89,25 @@ class ControladorUsuarios{
         return $resultado;
     }
 
+    public static function ctrBorrarUsuario()
+    {
+        if (isset($_POST["borrarUsuarioId"])) {
+
+            $respuesta = ModeloUsuarios::mdlBorrarUsuarios($_POST["borrarUsuarioId"]);
+
+            if ($respuesta){
+                echo "<script>
+                        if (window.history.replaceState){
+                            window.history.replaceState(null, null, window.location.href);
+                        }
+                       </script>";
+
+                echo '<script>window.location = "administrar-usuarios";</script>';
+            }
+            return $respuesta;
+        }
+    }
+
     public function ctrIniciarSesion()
     {
         if (isset($_POST["email"])){
