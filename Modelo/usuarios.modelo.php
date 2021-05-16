@@ -191,5 +191,21 @@ Class ModeloUsuarios{
         }
     }
 
+    public static function mdlObtenerUsuariosPaginados($registroInicio, $numeroRegistros)
+    {
+
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT * FROM usuarios LIMIT :registroInicio , :numeroRegistros"
+        );
+        $consulta->bindParam(":registroInicio", $registroInicio, PDO::PARAM_INT);
+        $consulta->bindParam(":numeroRegistros", $numeroRegistros, PDO::PARAM_INT);
+
+        $consulta->execute();
+
+        $resultado = $consulta->fetchAll();
+
+        return $resultado;
+    }
+
 
 }

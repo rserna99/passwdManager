@@ -114,6 +114,22 @@ class ControladorUsuarios{
         }
     }
 
+    public static function ctrListarUsuariosPaginados($usuariosPorPagina, $pagina)
+    {
+        $registroInicio = 0;
+        $numeroRegistros = $usuariosPorPagina;
+
+        for ($i = 1; $i < $pagina; $i++){
+            $registroInicio = $registroInicio + $usuariosPorPagina;
+
+        }
+
+
+        $respuesta = ModeloUsuarios::mdlObtenerUsuariosPaginados($registroInicio, $numeroRegistros);
+
+        return $respuesta;
+    }
+
     public function ctrIniciarSesion()
     {
         if (isset($_POST["email"])){
