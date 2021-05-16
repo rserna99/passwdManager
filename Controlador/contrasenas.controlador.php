@@ -1,6 +1,6 @@
 <?php
 
-require "Modelo/modelo.contrasenas.php";
+require "Modelo/contrasenas.modelo.php";
 
 class ControladorContrasenas{
 

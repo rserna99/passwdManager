@@ -12,7 +12,7 @@ if (isset($_GET["id"])){
 
 ?>
 
-    <h2>Modificar contraseña</h2>
+    <h2><i class="fas fa-edit"></i> Modificar contraseña</h2>
     <hr style="width: 98%">
     <br>
     <form method="post">

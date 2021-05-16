@@ -1,4 +1,4 @@
-<h2>Registrar usuario</h2>
+<h2><i class="fas fa-user-plus"></i> Registrar usuario</h2>
 <hr style="width: 98%;"><br>
 
 <form method="post" class="was-validated">

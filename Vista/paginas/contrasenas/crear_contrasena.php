@@ -5,7 +5,7 @@ ControladorUsuarios::ctrUsuarioIniciado();
 
 ?>
 
-<h2>Crear contraseñas</h2>
+<h2><i class="fas fa-plus"></i> Crear contraseñas</h2>
 <hr style="width: 98%">
 <br>
 <form method="post">

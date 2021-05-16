@@ -24,7 +24,7 @@ $usuariosPaginados = $controladorUsuarios::ctrListarUsuariosPaginados($usuariosP
 ?>
 
 
-<h2>Administrar usuarios</h2>
+<h2><i class="fas fa-user-cog"></i> Administrar usuarios</h2>
 <hr style="width: 98%;"><br>
 <br>
 

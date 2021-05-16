@@ -64,9 +64,11 @@ session_start();
                 echo '<li class="nav-item dropdown">';
                 echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administración <i class="fas fa-cogs"></i></a>';
                 echo '<div class="dropdown-menu" aria-labelledby="navbarDropdown">';
-                echo '<a title="Administrar usuario" href="administrar-usuarios" class="dropdown-item">Administrar usuarios <i class="fas fa-users-cog"></i></a>';
+                echo '<a title="Administrar usuario" href="administrar-usuarios" class="dropdown-item">Administrar usuarios <i class="fas fa-user-cog"></i></i></a>';
+                echo '<a title="Administrar grupos" href="administrar-grupos" class="dropdown-item">Administrar grupos <i class="fas fa-users-cog"></i></a>';
                 echo '</div>';
                 echo '</li>';
+
 
 
                 echo '<li class="navbar-item">';
@@ -108,6 +110,9 @@ session_start();
                 break;
             case "administrar-usuarios":
                 include "Vista/paginas/usuarios/admin_usuarios.php";
+                break;
+            case "administrar-grupos":
+                include "Vista/paginas/grupos/admin-grupos.php";
                 break;
             case "contrasenas":
                 include "Vista/paginas/contrasenas/listar_contrasenas.php";

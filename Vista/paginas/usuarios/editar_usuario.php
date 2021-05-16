@@ -11,7 +11,7 @@ if (isset($_GET["token"])){
 
 ?>
 
-    <h2>Editar usuario</h2>
+    <h2><i class="fas fa-user-edit"></i> Editar usuario</h2>
     <hr style="width: 98%;"><br>
 
     <form method="post">

@@ -36,7 +36,7 @@ $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($c
 
 
 
-<h2>Listado de contraseñas</h2>
+<h2><i class="fas fa-key"></i> Listado de contraseñas</h2>
 <hr style="width: 98%">
 <br>
 
