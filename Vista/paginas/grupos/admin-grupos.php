@@ -1,24 +1,24 @@
 <?php
 
 
-/*require "Controlador/usuarios.controlador.php";
-
-$controladorUsuarios = new ControladorUsuarios();
-$usuarios = $controladorUsuarios::ctrListarUsuarios();
+require "Controlador/grupos.controlador.php";
 
 
-$numeroUsuarios = count($usuarios);
+$grupos = ControladorGrupos::ctrListarGrupos();
 
-$usuariosPorPagina = (isset($_POST["usuariosPorPagina"])) ?
-    $_POST["contrasenasPorPagina"] :
+
+$numeroGrupos = count($grupos);
+
+$usuariosPorPagina = (isset($_POST["gruposPorPagina"])) ?
+    $_POST["gruposPorPagina"] :
     8;
-$numeroPaginas = ceil($numeroUsuarios / $usuariosPorPagina);
+$numeroPaginas = ceil($numeroGrupos / $usuariosPorPagina);
 
 $paginaNumero = (isset($_GET["pagina-numero"])) ?
     $_GET["pagina-numero"] :
     1;
 
-$usuariosPaginados = $controladorUsuarios::ctrListarUsuariosPaginados($usuariosPorPagina, $paginaNumero);*/
+$gruposPaginados =  ControladorGrupos::ctrListarUsuariosPaginados($usuariosPorPagina, $paginaNumero);
 
 
 
@@ -30,7 +30,7 @@ $usuariosPaginados = $controladorUsuarios::ctrListarUsuariosPaginados($usuariosP
 <br>
 
 <div class="col-10">
-    <a class="btn btn-primary" title="Añadir usuario" href="registro"><i class="fas fa-user-plus"></i> Añadir grupo </a>
+    <a class="btn btn-primary" title="Añadir usuario" href="crear-grupo"><i class="fas fa-user-plus"></i> Añadir grupo </a>
 </div>
 <br>
 <table class="table table-striped table-responsive">
@@ -42,85 +42,82 @@ $usuariosPaginados = $controladorUsuarios::ctrListarUsuariosPaginados($usuariosP
     </tr>
     </thead>
     <tbody>
-<!--    --><?php //foreach ($usuariosPaginados as $key => $usuario): ?>
+<?php foreach ($gruposPaginados as $key => $grupo): ?>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?php echo $grupo["nombre"]; ?></td>
+        <td><?php echo $grupo["descripcion"]; ?></td>
         <td>
             <div class="btn-group">
                 <div class="px-1">
-                    <a title="Editar usuario" href="index.php?pagina=editar-grupo&token=" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
+                    <a title="Editar grupo" href="index.php?pagina=editar-grupo&token=<?php echo $grupo["token"]; ?>" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
                 </div>
                 <form method="post">
-                    <input type="hidden" value="" name="borrarGrupoId">
+                    <input type="hidden" value="<?php echo $grupo["token"]; ?>" name="borrarGrupoId">
                     <button title="Borrar grupo" type="submit" class="btn btn-danger"><i class="fas fa-user-minus"></i></i></button>
 
-<!--                    --><?php
-//                    $eliminar = $controladorUsuarios::ctrBorrarUsuario();
-//
-//                    ?>
+                    <?php
+                    $eliminar = ControladorGrupos::ctrBorrarGrupo();
+
+                    ?>
                 </form>
             </div>
         </td>
     </tr>
-<!--    --><?php //endforeach; ?>
+    <?php endforeach; ?>
     </tbody>
 </table>
 
 
-//<?php
-//
-//if ($numeroPaginas > 1){
-//    echo '<nav aria-label="Seleccionar pagina" >';
-//    echo '<ul class="pagination pagination-sm justify-content-end">';
-//
-//
-//    if (isset($_GET["pagina-numero"]))
-//    {
-//        $numeroPaginaSiguiente = ($_GET["pagina-numero"] === 1) ?
-//            2:
-//            $_GET["pagina-numero"]+1;
-//
-//        $numeroPaginaAnterior = ($_GET["pagina-numero"] ===  $numeroPaginas) ?
-//            $_GET["pagina-numero"]:
-//            $_GET["pagina-numero"]-1;
-//    }
-//    else {
-//        $numeroPaginaAnterior = 1;
-//        $numeroPaginaSiguiente = 2;
-//    }
-//
-//
-//
-//
-//    $urlPagina = "index.php?pagina=administrar-usuarios&pagina-numero=";
-//    $urlPaginaAnterior = $urlPagina . $numeroPaginaAnterior;
-//    $urlPaginaSiguiente = $urlPagina . $numeroPaginaSiguiente;
-//
-//    $deshabilitarAnterior = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == 1 ) || !isset($_GET["pagina-numero"])) ?
-//        'disabled' :
-//        '';
-//    $deshabilitarSiguiente = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $numeroPaginas ))?
-//        'disabled':
-//        '';
-//
-//
-//    echo '<li class="page-item ' . $deshabilitarAnterior .'"><a class="page-link" href="' . $urlPaginaAnterior . '">Anterior</a></li>';
-//
-//    for ($i = 1; $i <= $numeroPaginas; $i++){
-//        $paginaActiva = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $i) || !isset($_GET["pagina-numero"]) && $i == 1) ? 'active': '';
-//        echo '<li class="page-item ' . $paginaActiva .'"><a class="page-link" href="' . $urlPagina . $i . '">' . $i . '</a></li>';
-//    }
-//
-//    echo '<li class="page-item ' . $deshabilitarSiguiente .'"><a class="page-link" href="' . $urlPaginaSiguiente . '">Siguiente</a></li>';
-//
-//    echo '</ul>';
-//    echo '</nav>';
-//}
-//
-//?>
+<?php
+
+if ($numeroPaginas > 1){
+    echo '<nav aria-label="Seleccionar pagina" >';
+    echo '<ul class="pagination pagination-sm justify-content-end">';
+
+
+    if (isset($_GET["pagina-numero"]))
+    {
+        $numeroPaginaSiguiente = ($_GET["pagina-numero"] === 1) ?
+            2:
+            $_GET["pagina-numero"]+1;
+
+        $numeroPaginaAnterior = ($_GET["pagina-numero"] ===  $numeroPaginas) ?
+            $_GET["pagina-numero"]:
+            $_GET["pagina-numero"]-1;
+    }
+    else {
+        $numeroPaginaAnterior = 1;
+        $numeroPaginaSiguiente = 2;
+    }
+
+
+
+
+    $urlPagina = "index.php?pagina=administrar-usuarios&pagina-numero=";
+    $urlPaginaAnterior = $urlPagina . $numeroPaginaAnterior;
+    $urlPaginaSiguiente = $urlPagina . $numeroPaginaSiguiente;
+
+    $deshabilitarAnterior = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == 1 ) || !isset($_GET["pagina-numero"])) ?
+        'disabled' :
+        '';
+    $deshabilitarSiguiente = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $numeroPaginas ))?
+        'disabled':
+        '';
+
+
+    echo '<li class="page-item ' . $deshabilitarAnterior .'"><a class="page-link" href="' . $urlPaginaAnterior . '">Anterior</a></li>';
+
+    for ($i = 1; $i <= $numeroPaginas; $i++){
+        $paginaActiva = ((isset($_GET["pagina-numero"]) && $_GET["pagina-numero"] == $i) || !isset($_GET["pagina-numero"]) && $i == 1) ? 'active': '';
+        echo '<li class="page-item ' . $paginaActiva .'"><a class="page-link" href="' . $urlPagina . $i . '">' . $i . '</a></li>';
+    }
+
+    echo '<li class="page-item ' . $deshabilitarSiguiente .'"><a class="page-link" href="' . $urlPaginaSiguiente . '">Siguiente</a></li>';
+
+    echo '</ul>';
+    echo '</nav>';
+}
+
+?>
 
 <br>
