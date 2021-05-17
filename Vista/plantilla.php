@@ -66,6 +66,7 @@ session_start();
                 echo '<div class="dropdown-menu" aria-labelledby="navbarDropdown">';
                 echo '<a title="Administrar usuario" href="administrar-usuarios" class="dropdown-item">Administrar usuarios <i class="fas fa-user-cog"></i></i></a>';
                 echo '<a title="Administrar grupos" href="administrar-grupos" class="dropdown-item">Administrar grupos <i class="fas fa-users-cog"></i></a>';
+                echo '<a title="Crear roles" href="crear-rol" class="dropdown-item">Crear rol</i></a>';
                 echo '</div>';
                 echo '</li>';
 
@@ -113,6 +114,9 @@ session_start();
                 break;
             case "administrar-grupos":
                 include "Vista/paginas/grupos/admin-grupos.php";
+                break;
+            case "crear-rol":
+                include "Vista/paginas/roles/crear_rol.php";
                 break;
             case "crear-grupo":
                 include "Vista/paginas/grupos/crear-grupo.php";

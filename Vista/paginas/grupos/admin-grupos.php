@@ -33,7 +33,7 @@ $gruposPaginados =  ControladorGrupos::ctrListarUsuariosPaginados($usuariosPorPa
     <a class="btn btn-primary" title="Añadir usuario" href="crear-grupo"><i class="fas fa-user-plus"></i> Añadir grupo </a>
 </div>
 <br>
-<table class="table table-striped table-responsive">
+<table class="table table-striped w-100">
     <thead>
     <tr>
         <th scope="col">Nombre</th>
@@ -93,7 +93,7 @@ if ($numeroPaginas > 1){
 
 
 
-    $urlPagina = "index.php?pagina=administrar-usuarios&pagina-numero=";
+    $urlPagina = "index.php?pagina=administrar-grupos&pagina-numero=";
     $urlPaginaAnterior = $urlPagina . $numeroPaginaAnterior;
     $urlPaginaSiguiente = $urlPagina . $numeroPaginaSiguiente;
 

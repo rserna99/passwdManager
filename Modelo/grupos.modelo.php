@@ -29,7 +29,7 @@ class ModeloGrupos
         }
     }
 
-    static public function mdlObtenerGrupos($token){
+    static public function mdlObtenerGrupos($token = null){
 
         if ($token == null){
 
