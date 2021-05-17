@@ -24,12 +24,11 @@ class ControladorGrupos
 
     public static function ctrActualizarGrupo(){
 
-        print_r($_POST);
 
-        foreach ($_POST as $dato) {
-            echo $dato;
-            echo "<br>";
-        }
+//        foreach ($_POST as $dato) {
+//            echo $dato;
+//            echo "<br>";
+//        }
 
         if (!isset($_POST["nombre"]) && !isset($_POST["descripcion"])){
             return;

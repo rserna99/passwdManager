@@ -1,20 +1,24 @@
 <?php
 
-require "Controlador/grupos.controlador.php";
 require "Controlador/usuarios.controlador.php";
+require "Controlador/grupos.controlador.php";
+
+
+//Fallo por aqui
+require "Controlador/usuario-grupo.controlador.php";
 
 
 $grupo = ControladorGrupos::ctrListarGrupos($_GET["token"]);
 
 $usuarios = ControladorUsuarios::ctrListarUsuarios();
 
-print_r($_POST);
+//print_r($_POST);
 
-if (isset($_POST["miembro"]))
-    echo '<script>alert("Añadir miembro");</script>';
-
-if (isset($_POST["admin"]))
-    echo '<script>alert("Añadir administrador");</script>';
+//if (isset($_POST["miembro"]))
+//    echo '<script>alert("Añadir miembro");</script>';
+//
+//if (isset($_POST["admin"]))
+//    echo '<script>alert("Añadir administrador");</script>';
 ?>
 
 
@@ -83,6 +87,7 @@ if (isset($_POST["admin"]))
 
 <?php
 
+UsuarioGrupoControlador::actializarUsuarioGrupo();
 
 $registro = ControladorGrupos::ctrActualizarGrupo();
 

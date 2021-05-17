@@ -27,4 +27,39 @@ Class ModeloRoles{
             return "error:No se ha podido guardar el rol";
         }
     }
+
+    static public function mdlObtenerRoles($id){
+        if ($id != null){
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM roles WHERE id = :id"
+            );
+
+            $consulta->bindParam(":id", $id);
+
+            if ($consulta->execute())
+            {
+                return $consulta->fetch();
+            }
+            else {
+                $consulta->close();
+                $consulta = null;
+                return "error:No se ha podido guardar el rol";
+            }
+        }
+        else {
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM roles"
+            );
+
+            if ($consulta->execute())
+            {
+                return $consulta->fetchAll();
+            }
+            else {
+                $consulta->close();
+                $consulta = null;
+                return "error:No se ha podido guardar el rol";
+            }
+        }
+    }
 }
