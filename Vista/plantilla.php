@@ -117,6 +117,9 @@ session_start();
             case "crear-grupo":
                 include "Vista/paginas/grupos/crear-grupo.php";
                 break;
+            case "editar-grupo":
+                include "Vista/paginas/grupos/editar-grupo.php";
+                break;
             case "contrasenas":
                 include "Vista/paginas/contrasenas/listar_contrasenas.php";
                 break;

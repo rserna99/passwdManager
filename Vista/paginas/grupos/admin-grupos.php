@@ -4,7 +4,7 @@
 require "Controlador/grupos.controlador.php";
 
 
-$grupos = ControladorGrupos::ctrListarGrupos();
+$grupos = ControladorGrupos::ctrListarGrupos(null);
 
 
 $numeroGrupos = count($grupos);

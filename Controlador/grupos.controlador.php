@@ -22,10 +22,14 @@ class ControladorGrupos
         return $respuesta;
     }
 
-    public static function ctrActualizarUsuario(){
+    public static function ctrActualizarGrupo(){
 
-        $token = (isset($_POST["token"]))?
-            $_POST["token"]:
+        if (!isset($_POST["nombre"]) && !isset($_POST["descripcion"])){
+            return;
+        }
+
+        $token = (isset($_GET["token"]))?
+            $_GET["token"]:
             $_SESSION["tokenUsuario"];
 
         $datos = array(
@@ -36,7 +40,7 @@ class ControladorGrupos
 
         ModeloGrupos::mdlActualizarGrupo($datos);
 
-        return $token;
+        return true;
 
     }
 
@@ -59,9 +63,9 @@ class ControladorGrupos
         }
     }
 
-    public static function ctrListarGrupos(){
+    public static function ctrListarGrupos($token){
 
-        $resultado = ModeloGrupos::mdlObtenerGrupos();
+        $resultado = ModeloGrupos::mdlObtenerGrupos($token);
 
         return $resultado;
     }

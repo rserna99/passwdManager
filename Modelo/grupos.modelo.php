@@ -20,27 +20,39 @@ class ModeloGrupos
 
         if ($consulta->execute())
         {
-            echo "ok";
             return "ok";
         }
         else {
-            echo $consulta->errorInfo();
             $consulta->close();
             $consulta = null;
             return "error:No se ha podido guardar el grupo";
         }
     }
 
-    static public function mdlObtenerGrupos(){
+    static public function mdlObtenerGrupos($token){
 
-        $consulta = Conexion::conectar()->prepare(
-            "SELECT * FROM grupos"
-        );
+        if ($token == null){
 
-        $consulta->execute();
-        $resultado = $consulta->fetch();
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM grupos"
+            );
 
-        return $resultado;
+            $consulta->execute();
+            $resultado = $consulta->fetchAll();
+
+            return $resultado;
+        }
+        else {
+            $consulta = Conexion::conectar()->prepare(
+                "SELECT * FROM grupos WHERE token = :token"
+            );
+            $consulta->bindParam(":token", $token);
+
+            $consulta->execute();
+            $resultado = $consulta->fetch();
+
+            return $resultado;
+        }
 
         $consulta->close();
         $consulta = null;
@@ -69,19 +81,15 @@ class ModeloGrupos
             "UPDATE grupos SET nombre = :nombre, descripcion = :descripcion  WHERE token = :token"
         );
 
-        $date = date('Y-m-d H:i:s');
-
         $consulta->bindParam(":nombre", $datos["nombre"]);
         $consulta->bindParam(":descripcion", $datos["descripcion"]);
         $consulta->bindParam(":token", $datos["token"]);
 
 
-        if ($consulta->execute())
-        {
+        if ($consulta->execute()) {
             return true;
         }
         else {
-
             $consulta->close();
             $consulta = null;
             return Conexion::conectar()->errorInfo();
