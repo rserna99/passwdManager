@@ -2,6 +2,7 @@
 
 
 require "Controlador/grupos.controlador.php";
+require "Controlador/usuario-grupo.controlador.php";
 
 
 $grupos = ControladorGrupos::ctrListarGrupos(null);
@@ -38,6 +39,7 @@ $gruposPaginados =  ControladorGrupos::ctrListarUsuariosPaginados($usuariosPorPa
     <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Descripción</th>
+        <th scope="col">Usuarios</th>
         <th scope="col">Acciones </th>
     </tr>
     </thead>
@@ -46,6 +48,25 @@ $gruposPaginados =  ControladorGrupos::ctrListarUsuariosPaginados($usuariosPorPa
     <tr>
         <td><?php echo $grupo["nombre"]; ?></td>
         <td><?php echo $grupo["descripcion"]; ?></td>
+        <td>
+            <?php
+
+            $usuariosDelGrupo = UsuarioGrupoControlador::ctrObtenerUsuariosDelGrupo($grupo["token"]);
+
+            echo "<ul>";
+
+            if (count($usuariosDelGrupo) >= 1)
+                foreach ($usuariosDelGrupo as $usuario){
+                    echo "<li>" . $usuario["nombre"] . "</li>";
+                }
+
+            else
+                echo "<li>Sin usuarios</li>";
+
+            echo "</ul>";
+
+            ?>
+        </td>
         <td>
             <div class="btn-group">
                 <div class="px-1">

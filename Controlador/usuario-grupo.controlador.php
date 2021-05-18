@@ -2,6 +2,7 @@
 
 require "Modelo/usuario-grupo.modelo.php";
 require "Modelo/roles.modelo.php";
+require_once "Controlador/plantillas.controlador.php";
 
 Class UsuarioGrupoControlador{
 
@@ -20,7 +21,7 @@ Class UsuarioGrupoControlador{
             );
 
             UsuarioGrupoModelo::borrarUsuarioGrupo($datos);
-            echo '<script>alert("borrar usuario del grupo")</script>';
+            //ControladorPlantilla::ctrActualizarPagina();
         }
         else {
             $rol = ModeloRoles::mdlObtenerRoles((isset($_POST["admin"]))? 2 : 3);
@@ -42,6 +43,7 @@ Class UsuarioGrupoControlador{
                 else {
                     echo '<script>alert("Actualizar rol del usuario")</script>';
                     UsuarioGrupoModelo::actualizarUsuarioGrupo($datos);
+                    //ControladorUtilidades::ctrActualizarPagina();
                 }
             }
             // Crear
@@ -49,16 +51,30 @@ Class UsuarioGrupoControlador{
             {
                 echo '<script>alert("Añadir usuario al grupo")</script>';
                 UsuarioGrupoModelo::anadirUsuarioGrupo($datos);
+                //ControladorUtilidades::ctrActualizarPagina();
             }
         }
 
 
-        echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-        </script>";
 
+
+    }
+
+    static public function ctrObtenerRolGrupo($token_grupo, $token_usuario){
+        $datos = array(
+            "token_usuario" => $token_usuario,
+            "token_grupo" => $token_grupo,
+        );
+
+        $usuarioGrupo = UsuarioGrupoModelo::obtenerUsuaioGrupo($datos);
+
+        return $usuarioGrupo;
+    }
+
+    static public function ctrObtenerUsuariosDelGrupo($token_grupo){
+        $usuariosDelGrupo = UsuarioGrupoModelo::mdlObtenerUsuariosDelGrupo($token_grupo);
+
+        return $usuariosDelGrupo;
     }
 
 }

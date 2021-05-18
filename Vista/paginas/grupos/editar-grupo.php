@@ -54,16 +54,30 @@ $usuarios = ControladorUsuarios::ctrListarUsuarios();
                 </thead>
                 <tbody>
                 <?php foreach ($usuarios as $key => $usuario): ?>
+
+                <?php
+
+                $rolUsuario = UsuarioGrupoControlador::ctrObtenerRolGrupo($grupo["token"], $usuario["token"]);
+                $admin = ModeloRoles::mdlObtenerRoles(2);
+                $miembro = ModeloRoles::mdlObtenerRoles(3);
+
+                ?>
+
+
                 <tr>
                     <td><?php echo $usuario["nombre"]; ?></td>
                     <form method="post">
                         <input type="hidden" name="token_usuario" value="<?php echo $usuario["token"]; ?>">
                         <input type="hidden" name="token_grupo" value="<?php echo $grupo["token"]; ?>">
                         <td>
-                            <input type="checkbox" name="miembro">
+                            <input type="checkbox" name="miembro"
+                                <?php echo ((isset($rolUsuario["token_rol"]) && isset($miembro)) && isset($rolUsuario) && $rolUsuario["token_rol"] == $miembro["token"])? "checked" : ""; ?>>
                         </td>
                         <td>
-                            <input type="checkbox" name="admin">
+                            <input type="checkbox" name="admin" <?php echo ((isset($rolUsuario["token_rol"]) && isset($admin))
+                                && $rolUsuario["token_rol"] == $admin["token"])?
+                                "checked" :
+                                ""; ?>>
                         </td>
                         <td>
                             <button class="btn btn-primary">Actualizar</button>
@@ -92,6 +106,9 @@ UsuarioGrupoControlador::actializarUsuarioGrupo();
 $registro = ControladorGrupos::ctrActualizarGrupo();
 
 if ($registro){
+
+    echo '<script>alert("Grupo actualizado")</script>';
+
     echo "<script>
         if (window.history.replaceState){
             window.history.replaceState(null, null, window.location.href);
@@ -108,6 +125,14 @@ if ($registro){
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';
 }
+
+echo "<script>
+        if (window.history.replaceState){
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>";
+
+
 
 ?>
 <br>

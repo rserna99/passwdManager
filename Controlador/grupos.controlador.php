@@ -41,7 +41,7 @@ class ControladorGrupos
 
         ModeloGrupos::mdlActualizarGrupo($datos);
 
-        return true;
+        //return true;
 
     }
 

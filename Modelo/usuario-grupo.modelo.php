@@ -91,4 +91,24 @@ Class UsuarioGrupoModelo{
         }
     }
 
+    public static function mdlObtenerUsuariosDelGrupo($token_grupo)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT u.nombre FROM `usuario-grupo` AS ug INNER JOIN usuarios u ON u.token = ug.token_usuario WHERE ug.token_grupo = :token_grupo"
+        );
+
+        $consulta->bindParam(":token_grupo", $token_grupo);
+
+        if ($consulta->execute())
+        {
+            return $consulta->fetchAll();
+        }
+        else {
+
+            $consulta->close();
+            $consulta = null;
+            return Conexion::conectar()->errorInfo();
+        }
+    }
+
 }
