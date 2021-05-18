@@ -8,57 +8,56 @@ Class UsuarioGrupoControlador{
 
     static public function actializarUsuarioGrupo(){
 
-        if (!isset($_POST["miembro"]) && !isset($_POST["admin"]))
+        if (!isset($_POST["token_usuario"]) && !isset($_POST["token_grupo"]))
             return;
 
-        $rol = ModeloRoles::mdlObtenerRoles((isset($_POST["admin"]))? 2 : 3);
+        //Borrar
+        if (!isset($_POST["miembro"]) && !isset($_POST["admin"])){
 
-        $datos = array(
-            "token_usuario" => $_POST["token_usuario"],
-            "token_grupo" => $_POST["token_grupo"],
-            "token_rol" => $rol["token"]
-        );
+            $datos = array(
+                "token_usuario" => $_POST["token_usuario"],
+                "token_grupo" => $_POST["token_grupo"]
+            );
 
-        //print_r($datos);
-        $usuarioGrupo = UsuarioGrupoModelo::obtenerUsuaioGrupo($datos);
+            UsuarioGrupoModelo::borrarUsuarioGrupo($datos);
+            echo '<script>alert("borrar usuario del grupo")</script>';
+        }
+        else {
+            $rol = ModeloRoles::mdlObtenerRoles((isset($_POST["admin"]))? 2 : 3);
+            $datos = array(
+                "token_usuario" => $_POST["token_usuario"],
+                "token_grupo" => $_POST["token_grupo"],
+                "token_rol" => $rol["token"]
+            );
 
-        print_r($usuarioGrupo);
+            $usuarioGrupo = UsuarioGrupoModelo::obtenerUsuaioGrupo($datos);
 
-        // Actualizar
-        if ($usuarioGrupo != null){
+            // Actualizar
+            if ($usuarioGrupo != null){
+                // Si ya esta registrado con el mismo rol no hacemos nada
+                if ($usuarioGrupo["token_rol"] == $datos["token_rol"])
+                    return;
 
-            // Si ya esta registrado con el mismo rol no hacemos nada
-            if ($usuarioGrupo["token_rol"] == $datos["token_rol"])
-                return;
-
-            // En el caso contrario actualizar el rol
-            else {
-                UsuarioGrupoModelo::actualizarUsuarioGrupo($datos);
+                // En el caso contrario actualizar el rol
+                else {
+                    echo '<script>alert("Actualizar rol del usuario")</script>';
+                    UsuarioGrupoModelo::actualizarUsuarioGrupo($datos);
+                }
             }
-
-            // Opcion de borrar
-            // si la consulta devuelve un resultado pero en el post no hay datos borrar
+            // Crear
+            else
+            {
+                echo '<script>alert("Añadir usuario al grupo")</script>';
+                UsuarioGrupoModelo::anadirUsuarioGrupo($datos);
+            }
         }
-        // Crear
-        else
-        {
-            UsuarioGrupoModelo::anadirUsuarioGrupo($datos);
-        }
-
 
 
         echo "<script>
         if (window.history.replaceState){
             window.history.replaceState(null, null, window.location.href);
         }
-    </script>";
-
-
-        //print_r($_POST);
-        // 1- Obtener el rol
-        // 2- Comprobar si el usuario ya esta en el grupo
-            // Si esta en el grupo con un rol distinto actualizarlo con un INSERT
-            // Si  no esta anadirlo con el rol indicado
+        </script>";
 
     }
 

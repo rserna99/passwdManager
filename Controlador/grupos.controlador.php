@@ -25,11 +25,6 @@ class ControladorGrupos
     public static function ctrActualizarGrupo(){
 
 
-//        foreach ($_POST as $dato) {
-//            echo $dato;
-//            echo "<br>";
-//        }
-
         if (!isset($_POST["nombre"]) && !isset($_POST["descripcion"])){
             return;
         }
@@ -44,9 +39,9 @@ class ControladorGrupos
                 "token" => $token
             );
 
-        //ModeloGrupos::mdlActualizarGrupo($datos);
+        ModeloGrupos::mdlActualizarGrupo($datos);
 
-        //return true;
+        return true;
 
     }
 
