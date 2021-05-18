@@ -91,7 +91,7 @@ UsuarioGrupoControlador::actializarUsuarioGrupo();
 
 $registro = ControladorGrupos::ctrActualizarGrupo();
 
-if ($registro == "ok"){
+if ($registro){
     echo "<script>
         if (window.history.replaceState){
             window.history.replaceState(null, null, window.location.href);

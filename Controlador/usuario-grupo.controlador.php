@@ -19,13 +19,25 @@ Class UsuarioGrupoControlador{
             "token_rol" => $rol["token"]
         );
 
-        print_r($datos);
+        //print_r($datos);
         $usuarioGrupo = UsuarioGrupoModelo::obtenerUsuaioGrupo($datos);
+
+        print_r($usuarioGrupo);
 
         // Actualizar
         if ($usuarioGrupo != null){
-            UsuarioGrupoModelo::actualizarUsuarioGrupo();
+
+            // Si ya esta registrado con el mismo rol no hacemos nada
+            if ($usuarioGrupo["token_rol"] == $datos["token_rol"])
+                return;
+
+            // En el caso contrario actualizar el rol
+            else {
+                UsuarioGrupoModelo::actualizarUsuarioGrupo($datos);
+            }
+
             // Opcion de borrar
+            // si la consulta devuelve un resultado pero en el post no hay datos borrar
         }
         // Crear
         else
