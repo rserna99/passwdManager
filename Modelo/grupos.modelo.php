@@ -7,26 +7,17 @@ class ModeloGrupos
 
     static public function mdlCrearGrupo($datos) {
 
-        $fecha = date('Y-m-d H:i:s');
-        $token = strval(md5($fecha));
+        $token = strval(md5(date('Y-m-d H:i:s')));
+
         $consulta = Conexion::conectar()->prepare(
             "INSERT INTO grupos(token, nombre, descripcion) VALUES (:token, :nombre, :descripcion)"
         );
 
-        $consulta->bindParam(":token", $token);
+        $consulta->bindParam(":token", $token, PDO::PARAM_STR);
         $consulta->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $consulta->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
-
-        if ($consulta->execute())
-        {
-            return "ok";
-        }
-        else {
-            $consulta->close();
-            $consulta = null;
-            return "error:No se ha podido guardar el grupo";
-        }
+        return $consulta->execute();
     }
 
     static public function mdlObtenerGrupos($token = null){
@@ -36,26 +27,20 @@ class ModeloGrupos
             $consulta = Conexion::conectar()->prepare(
                 "SELECT * FROM grupos"
             );
-
             $consulta->execute();
-            $resultado = $consulta->fetchAll();
 
-            return $resultado;
+            return $consulta->fetchAll();
         }
         else {
             $consulta = Conexion::conectar()->prepare(
                 "SELECT * FROM grupos WHERE token = :token"
             );
-            $consulta->bindParam(":token", $token);
+            $consulta->bindParam(":token", $token, PDO::PARAM_STR);
 
             $consulta->execute();
-            $resultado = $consulta->fetch();
 
-            return $resultado;
+            return $consulta->fetch();
         }
-
-        $consulta->close();
-        $consulta = null;
     }
 
     public static function mdlObtenerGruposPaginados($registroInicio, $numeroRegistros)
@@ -69,9 +54,7 @@ class ModeloGrupos
 
         $consulta->execute();
 
-        $resultado = $consulta->fetchAll();
-
-        return $resultado;
+        return $consulta->fetchAll();
     }
 
     public static function mdlActualizarGrupo($datos)
@@ -81,19 +64,11 @@ class ModeloGrupos
             "UPDATE grupos SET nombre = :nombre, descripcion = :descripcion  WHERE token = :token"
         );
 
-        $consulta->bindParam(":nombre", $datos["nombre"]);
-        $consulta->bindParam(":descripcion", $datos["descripcion"]);
-        $consulta->bindParam(":token", $datos["token"]);
+        $consulta->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+        $consulta->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+        $consulta->bindParam(":token", $datos["token"], PDO::PARAM_STR);
 
-
-        if ($consulta->execute()) {
-            return true;
-        }
-        else {
-            $consulta->close();
-            $consulta = null;
-            return Conexion::conectar()->errorInfo();
-        }
+        return $consulta->execute();
     }
 
     public static function mdlBorrarGrupo($token)
@@ -102,18 +77,9 @@ class ModeloGrupos
             "DELETE FROM grupos WHERE token = :token"
         );
 
-        $consulta->bindParam(":token", $token);
+        $consulta->bindParam(":token", $token, PDO::PARAM_STR);
 
-        if ($consulta->execute())
-        {
-            return true;
-        }
-        else {
-
-            $consulta->close();
-            $consulta = null;
-            return Conexion::conectar()->errorInfo();
-        }
+        return $consulta->execute();
     }
 
 }

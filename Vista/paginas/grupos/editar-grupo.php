@@ -2,9 +2,6 @@
 
 require "Controlador/usuarios.controlador.php";
 require "Controlador/grupos.controlador.php";
-
-
-//Fallo por aqui
 require "Controlador/usuario-grupo.controlador.php";
 
 
@@ -12,15 +9,7 @@ $grupo = ControladorGrupos::ctrListarGrupos($_GET["token"]);
 
 $usuarios = ControladorUsuarios::ctrListarUsuarios();
 
-//print_r($_POST);
-
-//if (isset($_POST["miembro"]))
-//    echo '<script>alert("Añadir miembro");</script>';
-//
-//if (isset($_POST["admin"]))
-//    echo '<script>alert("Añadir administrador");</script>';
 ?>
-
 
 
 <h2><i class="fas fa-pencil-alt"></i> Editar grupo</h2>
@@ -101,38 +90,23 @@ $usuarios = ControladorUsuarios::ctrListarUsuarios();
 
 <?php
 
+
 UsuarioGrupoControlador::actializarUsuarioGrupo();
 
 $registro = ControladorGrupos::ctrActualizarGrupo();
 
 if ($registro){
 
-    echo '<script>alert("Grupo actualizado")</script>';
-
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
     echo '<div class="alert alert-success" role="alert">Grupo actualizado</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "administrar-grupos";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina("administrar-grupos", 800);
+
 }
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';
 }
 
-echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
-
-
+ControladorPlantilla::crtLimpiarDatosNavegador();
 
 ?>
 <br>

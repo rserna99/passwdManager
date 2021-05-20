@@ -1,7 +1,7 @@
 <?php
 
 require "Controlador/usuarios.controlador.php";
-ControladorUsuarios::ctrUsuarioIniciado();
+ControladorUsuarios::ctrValidarUsuarioIniciado();
 
 ?>
 
@@ -43,15 +43,11 @@ require "Controlador/contrasenas.controlador.php";
 $registro = ControladorContrasenas::ctrCrearContrasena();
 
 if ($registro){
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
-    //echo '<div class="alert alert-success" role="alert">Contraseña almacenada</div>';
-    echo '<script>window.location = "contrasenas"</script>';
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
+    ControladorPlantilla::ctrCambiarPagina("contrasenas", null);
+
 }
-else
 
 
 ?>

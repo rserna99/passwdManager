@@ -1,7 +1,7 @@
 <?php
 
 require "Controlador/usuarios.controlador.php";
-ControladorUsuarios::ctrUsuarioIniciado();
+ControladorUsuarios::ctrValidarUsuarioIniciado();
 
 if (isset($_GET["token"])){
 
@@ -54,27 +54,22 @@ $registro = ControladorUsuarios::ctrActualizarUsuario();
 
 if ($registro){
 
+    ControladorPlantilla::crtLimpiarDatosNavegador();
 
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
     echo '<div class="alert alert-success" role="alert">Usuario actualizado</div>';
 
     $location = ($registro == $_SESSION["tokenUsuario"])?
         "contrasenas" :
         "administrar-usuarios";
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "' . $location . '";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina($location, 800);
 
-    /**/
+
 }
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';
 }
 
+?>
+
+<br>

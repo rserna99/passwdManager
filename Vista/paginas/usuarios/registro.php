@@ -41,18 +41,13 @@ require "Controlador/usuarios.controlador.php";
 $registro = ControladorUsuarios::ctrRegistrarUsuario();
 
 if ($registro == "ok"){
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
+
     echo '<div class="alert alert-success" role="alert">Usuario registrado</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "iniciar-sesion";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina("iniciar-sesion", 800);
+
 }
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';

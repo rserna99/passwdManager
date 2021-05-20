@@ -9,21 +9,11 @@ Class UsuarioGrupoModelo{
             "INSERT INTO `usuario-grupo` (token_usuario, token_grupo, token_rol) VALUES (:token_usuario, :token_grupo, :token_rol)"
         );
 
-        $consulta->bindParam(":token_usuario", $datos["token_usuario"]);
-        $consulta->bindParam(":token_grupo", $datos["token_grupo"]);
-        $consulta->bindParam(":token_rol", $datos["token_rol"]);
+        $consulta->bindParam(":token_usuario", $datos["token_usuario"], PDO::PARAM_STR);
+        $consulta->bindParam(":token_grupo", $datos["token_grupo"], PDO::PARAM_STR);
+        $consulta->bindParam(":token_rol", $datos["token_rol"], PDO::PARAM_STR);
 
-
-        if ($consulta->execute())
-        {
-            return true;
-        }
-        else {
-
-            $consulta->close();
-            $consulta = null;
-            return Conexion::conectar()->errorInfo();
-        }
+        return $consulta->execute();
     }
 
     static public function obtenerUsuaioGrupo($datos){
@@ -31,20 +21,11 @@ Class UsuarioGrupoModelo{
             "SELECT * FROM `usuario-grupo` WHERE token_usuario = :token_usuario AND token_grupo = :token_grupo"
         );
 
-        $consulta->bindParam(":token_usuario", $datos["token_usuario"]);
-        $consulta->bindParam(":token_grupo", $datos["token_grupo"]);
+        $consulta->bindParam(":token_usuario", $datos["token_usuario"], PDO::PARAM_STR);
+        $consulta->bindParam(":token_grupo", $datos["token_grupo"], PDO::PARAM_STR);
 
 
-        if ($consulta->execute())
-        {
-            return $consulta->fetch();
-        }
-        else {
-
-            $consulta->close();
-            $consulta = null;
-            return null;
-        }
+        return $consulta->execute();
     }
 
     static public function actualizarUsuarioGrupo($datos){
@@ -53,21 +34,12 @@ Class UsuarioGrupoModelo{
             "UPDATE `usuario-grupo` SET token_rol = :token_rol  WHERE token_usuario = :token_usuario AND token_grupo = :token_grupo"
         );
 
-        $consulta->bindParam(":token_usuario", $datos["token_usuario"]);
-        $consulta->bindParam(":token_grupo", $datos["token_grupo"]);
-        $consulta->bindParam(":token_rol", $datos["token_rol"]);
+        $consulta->bindParam(":token_usuario", $datos["token_usuario"], PDO::PARAM_STR);
+        $consulta->bindParam(":token_grupo", $datos["token_grupo"], PDO::PARAM_STR);
+        $consulta->bindParam(":token_rol", $datos["token_rol"], PDO::PARAM_STR);
 
 
-        if ($consulta->execute())
-        {
-            return true;
-        }
-        else {
-
-            $consulta->close();
-            $consulta = null;
-            return null;
-        }
+        return $consulta->execute();
 
     }
 
@@ -76,19 +48,10 @@ Class UsuarioGrupoModelo{
             "DELETE FROM `usuario-grupo`WHERE token_usuario = :token_usuario AND token_grupo = :token_grupo"
         );
 
-        $consulta->bindParam(":token_usuario", $datos["token_usuario"]);
-        $consulta->bindParam(":token_grupo", $datos["token_grupo"]);
+        $consulta->bindParam(":token_usuario", $datos["token_usuario"], PDO::PARAM_STR);
+        $consulta->bindParam(":token_grupo", $datos["token_grupo"], PDO::PARAM_STR);
 
-        if ($consulta->execute())
-        {
-            return true;
-        }
-        else {
-
-            $consulta->close();
-            $consulta = null;
-            return Conexion::conectar()->errorInfo();
-        }
+        return $consulta->execute();
     }
 
     public static function mdlObtenerUsuariosDelGrupo($token_grupo)
@@ -97,18 +60,9 @@ Class UsuarioGrupoModelo{
             "SELECT u.nombre FROM `usuario-grupo` AS ug INNER JOIN usuarios u ON u.token = ug.token_usuario WHERE ug.token_grupo = :token_grupo"
         );
 
-        $consulta->bindParam(":token_grupo", $token_grupo);
+        $consulta->bindParam(":token_grupo", $token_grupo, PDO::PARAM_STR);
 
-        if ($consulta->execute())
-        {
-            return $consulta->fetchAll();
-        }
-        else {
-
-            $consulta->close();
-            $consulta = null;
-            return Conexion::conectar()->errorInfo();
-        }
+        return $consulta->execute();
     }
 
 }

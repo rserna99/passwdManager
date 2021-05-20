@@ -1,6 +1,5 @@
 <?php
 
-
 require "Controlador/grupos.controlador.php";
 require "Controlador/usuario-grupo.controlador.php";
 
@@ -20,8 +19,6 @@ $paginaNumero = (isset($_GET["pagina-numero"])) ?
     1;
 
 $gruposPaginados =  ControladorGrupos::ctrListarUsuariosPaginados($usuariosPorPagina, $paginaNumero);
-
-
 
 ?>
 

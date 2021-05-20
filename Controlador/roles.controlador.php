@@ -6,9 +6,8 @@ Class ControladorRoles{
 
     public static function ctrCrearRol(){
 
-        if (!(isset($_POST["nombre"]) && $_POST["nombre"] != null)){
-            return;
-        }
+        if (!(isset($_POST["nombre"]) && $_POST["nombre"] != null))
+            return null;
 
         $datos = array(
             "nombre" => $_POST["nombre"],

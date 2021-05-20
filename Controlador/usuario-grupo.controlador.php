@@ -2,7 +2,6 @@
 
 require "Modelo/usuario-grupo.modelo.php";
 require "Modelo/roles.modelo.php";
-require_once "Controlador/plantillas.controlador.php";
 
 Class UsuarioGrupoControlador{
 
@@ -35,11 +34,9 @@ Class UsuarioGrupoControlador{
 
             // Actualizar
             if ($usuarioGrupo != null){
-                // Si ya esta registrado con el mismo rol no hacemos nada
                 if ($usuarioGrupo["token_rol"] == $datos["token_rol"])
                     return;
 
-                // En el caso contrario actualizar el rol
                 else {
                     echo '<script>alert("Actualizar rol del usuario")</script>';
                     UsuarioGrupoModelo::actualizarUsuarioGrupo($datos);

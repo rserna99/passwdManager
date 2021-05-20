@@ -32,25 +32,17 @@ require "Controlador/grupos.controlador.php";
 $registro = ControladorGrupos::ctrCrearGrupo();
 
 if ($registro == "ok"){
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
+
     echo '<div class="alert alert-success" role="alert">Grupo creado</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "administrar-grupos";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina("administrar-grupos", 800);
+
 }
-else if (str_contains($registro, "error")) {
+else if (str_contains($registro, "error"))
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';
-}
-else{
-    print_r($registro);
-}
+
 
 ?>
 <br>

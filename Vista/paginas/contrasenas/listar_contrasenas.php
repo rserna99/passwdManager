@@ -3,7 +3,7 @@
 require "Controlador/contrasenas.controlador.php";
 require "Controlador/usuarios.controlador.php";
 
-ControladorUsuarios::ctrUsuarioIniciado();
+ControladorUsuarios::ctrValidarUsuarioIniciado();
 
 $servicios = ControladorUsuarios::ctrObtenerServicios();
 $actualizar = ControladorContrasenas::ctrModificarContrasena();

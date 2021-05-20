@@ -17,15 +17,7 @@ Class ModeloRoles{
         $consulta->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
 
-        if ($consulta->execute())
-        {
-            return "ok";
-        }
-        else {
-            $consulta->close();
-            $consulta = null;
-            return "error:No se ha podido guardar el rol";
-        }
+        return ($consulta->execute())? "ok":"error:No se ha podido guardar el rol";
     }
 
     static public function mdlObtenerRoles($id){
@@ -34,32 +26,17 @@ Class ModeloRoles{
                 "SELECT * FROM roles WHERE id = :id"
             );
 
-            $consulta->bindParam(":id", $id);
+            $consulta->bindParam(":id", $id, PDO::PARAM_INT);
 
-            if ($consulta->execute())
-            {
-                return $consulta->fetch();
-            }
-            else {
-                $consulta->close();
-                $consulta = null;
-                return "error:No se ha podido guardar el rol";
-            }
+            return $consulta->execute();
+
         }
         else {
             $consulta = Conexion::conectar()->prepare(
                 "SELECT * FROM roles"
             );
 
-            if ($consulta->execute())
-            {
-                return $consulta->fetchAll();
-            }
-            else {
-                $consulta->close();
-                $consulta = null;
-                return "error:No se ha podido guardar el rol";
-            }
+            return $consulta->execute();
         }
     }
 }

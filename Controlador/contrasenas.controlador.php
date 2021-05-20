@@ -60,13 +60,8 @@ class ControladorContrasenas{
             $respuesta = ModeloContrasenas::mdlBorrarContrasena($_POST["borrarContrasenaId"]);
 
             if ($respuesta){
-                echo "<script>
-                        if (window.history.replaceState){
-                            window.history.replaceState(null, null, window.location.href);
-                        }
-                       </script>";
-
-                echo '<script>window.location = "contrasenas";</script>';
+                ControladorPlantilla::crtLimpiarDatosNavegador();
+                ControladorPlantilla::ctrCambiarPagina("contrasenas", null);
             }
             return $respuesta;
         }

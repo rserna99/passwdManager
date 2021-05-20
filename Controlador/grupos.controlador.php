@@ -7,10 +7,8 @@ class ControladorGrupos
 
     public static function ctrCrearGrupo(){
 
-        if (!(isset($_POST["nombre"]) && $_POST["descripcion"] != null)){
-            return;
-        }
-
+        if (!(isset($_POST["nombre"]) && $_POST["descripcion"] != null))
+            return null;
 
         $datos = array(
             "nombre" => $_POST["nombre"],
@@ -25,9 +23,8 @@ class ControladorGrupos
     public static function ctrActualizarGrupo(){
 
 
-        if (!isset($_POST["nombre"]) && !isset($_POST["descripcion"])){
-            return;
-        }
+        if (!isset($_POST["nombre"]) && !isset($_POST["descripcion"]))
+            return null;
 
         $token = (isset($_GET["token"]))?
             $_GET["token"]:
@@ -41,8 +38,7 @@ class ControladorGrupos
 
         ModeloGrupos::mdlActualizarGrupo($datos);
 
-        //return true;
-
+        return true;
     }
 
     public static function ctrBorrarGrupo()
@@ -52,16 +48,14 @@ class ControladorGrupos
             $respuesta = ModeloGrupos::mdlBorrarGrupo($_POST["borrarGrupoId"]);
 
             if ($respuesta){
-                echo "<script>
-                        if (window.history.replaceState){
-                            window.history.replaceState(null, null, window.location.href);
-                        }
-                       </script>";
 
-                echo '<script>window.location = "administrar-grupos";</script>';
+                ControladorPlantilla::crtLimpiarDatosNavegador();
+                ControladorPlantilla::ctrCambiarPagina("administrar-grupos", null);
+
             }
             return $respuesta;
         }
+        return false;
     }
 
     public static function ctrListarGrupos($token){

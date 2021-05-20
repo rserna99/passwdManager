@@ -1,7 +1,7 @@
 <?php
 
 require "Controlador/usuarios.controlador.php";
-ControladorUsuarios::ctrUsuarioIniciado();
+ControladorUsuarios::ctrValidarUsuarioIniciado();
 
 
 require "Controlador/contrasenas.controlador.php";
@@ -49,18 +49,13 @@ $contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
 
 if ($actualizar){
-    echo "<script>
-                        if (window.history.replaceState){
-                            window.history.replaceState(null, null, window.location.href);
-                        }
-                       </script>";
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
 
     echo '<div class="alert alert-success" role="alert">Contraseña actualizada correctamente</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "contrasenas";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina("contrasenas", 800);
 
 }
+?>
+<br>

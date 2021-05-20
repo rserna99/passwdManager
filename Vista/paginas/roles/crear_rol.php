@@ -20,22 +20,16 @@
 
 require "Controlador/roles.controlador.php";
 
-
 $registro = ControladorRoles::ctrCrearRol();
 
 if ($registro == "ok"){
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
+
     echo '<div class="alert alert-success" role="alert">Rol Creado</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "contrasenas";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina("contrasenas", 800);
+
 }
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';
