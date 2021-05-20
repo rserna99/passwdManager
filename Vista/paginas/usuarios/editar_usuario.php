@@ -1,7 +1,7 @@
 <?php
 
 require "Controlador/usuarios.controlador.php";
-ControladorUsuarios::ctrUsuarioIniciado();
+ControladorUsuarios::ctrValidarUsuarioIniciado();
 
 if (isset($_GET["token"])){
 
@@ -11,7 +11,7 @@ if (isset($_GET["token"])){
 
 ?>
 
-    <h2>Editar usuario</h2>
+    <h2><i class="fas fa-user-edit"></i> Editar usuario</h2>
     <hr style="width: 98%;"><br>
 
     <form method="post">
@@ -36,6 +36,7 @@ if (isset($_GET["token"])){
             <div class="input-group-append">
                 <button type="button" title="Mostrar contraseña" onclick='mostrarContrasena()' class="btn btn-outline-secondary"><i id="mostrar_contrasena" class="fas fa-eye"></i></button>
             </div>
+            <input type="hidden" value="<?php echo $usuario["token"]; ?>" name="token">
         </div>
 
         <div class="row">
@@ -52,20 +53,23 @@ if (isset($_GET["token"])){
 $registro = ControladorUsuarios::ctrActualizarUsuario();
 
 if ($registro){
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
+
     echo '<div class="alert alert-success" role="alert">Usuario actualizado</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "contrasenas";
-            },800);
-          </script>';
+    $location = ($registro == $_SESSION["tokenUsuario"])?
+        "contrasenas" :
+        "administrar-usuarios";
+
+    ControladorPlantilla::ctrCambiarPagina($location, 800);
+
+
 }
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';
 }
 
+?>
+
+<br>

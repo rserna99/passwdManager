@@ -7,23 +7,22 @@ class ControladorUsuarios{
 
     public static function ctrRegistrarUsuario(){
 
-        if (!(isset($_POST["nombreRegistro"]) && $_POST["nombreRegistro"] != null)){
-            return;
-        }
+        if (!(isset($_POST["nombreRegistro"]) && $_POST["nombreRegistro"] != null))
+            return null;
+
 
         $validarNombre = ControladorSeguridad::ctrValidarNombreUsuario($_POST["nombreRegistro"]);
         $validarEmail = ControladorSeguridad::ctrValidarEmail($_POST["emailRegistro"]);
         $validarContrasena = ControladorSeguridad::ctrValidarContrasena($_POST["contrasenaRegistro"]);
 
-        if ($validarNombre != "ok") {
+
+        if ($validarNombre != "ok")
             return $validarNombre;
-        }
-        if ($validarEmail != "ok") {
+        if ($validarEmail != "ok")
             return $validarEmail;
-        }
-        if ($validarContrasena != "ok") {
+        if ($validarContrasena != "ok")
             return $validarContrasena;
-        }
+
 
         $contrasenaEncriptada = crypt($_POST["contrasenaRegistro"], '$2a$07$ghfFdsOgfmdrQxdrtkLxp$');
 
@@ -40,31 +39,35 @@ class ControladorUsuarios{
 
     public static function ctrActualizarUsuario(){
 
-        if (!(isset($_POST["nombre"]) && $_POST["nombre"] != null) || !(isset($_POST["email"]) && $_POST["email"] != null)){
-            return;
-        }
-        $datos = null;
+        if (!(isset($_POST["nombre"]) && $_POST["nombre"] != null) || !(isset($_POST["email"]) && $_POST["email"] != null))
+            return null;
 
-        if (isset($_POST["contrasena"]) && $_POST["contrasena"] != "")
-        {
-            $contrasenaEncriptada = crypt($_POST["contrasena"], '$2a$07$ghfFdsOgfmdrQxdrtkLxp$');
 
-            $datos = array(
-                "nombre" => $_POST["nombre"],
-                "email" => $_POST["email"],
-                "contrasena" => $contrasenaEncriptada
-            );
-        }
-        else {
-            $datos = array(
-                "nombre" => $_POST["nombre"],
-                "email" => $_POST["email"],
-            );
-        }
 
-        $resultado = ModeloUsuarios::mdlActualizarUsuario($datos);
+        $token = (isset($_POST["token"]))?
+            $_POST["token"]:
+            $_SESSION["tokenUsuario"];
 
-        return $resultado;
+
+        $contrasenaEncriptada = (isset($_POST["contrasena"]) && $_POST["contrasena"] != "")?
+            crypt($_POST["contrasena"], '$2a$07$ghfFdsOgfmdrQxdrtkLxp$'): null;
+
+
+        $datos = (isset($_POST["contrasena"]) && $_POST["contrasena"] != "")?
+            array(
+            "nombre" => $_POST["nombre"],
+            "email" => $_POST["email"],
+            "token" => $token,
+            "contrasena" => $contrasenaEncriptada):
+            array(
+            "nombre" => $_POST["nombre"],
+            "email" => $_POST["email"],
+            "token" => $token
+        );
+
+        ModeloUsuarios::mdlActualizarUsuario($datos);
+
+        return $token;
 
     }
 
@@ -89,6 +92,37 @@ class ControladorUsuarios{
         return $resultado;
     }
 
+    public static function ctrBorrarUsuario()
+    {
+        if (isset($_POST["borrarUsuarioId"])) {
+
+            $respuesta = ModeloUsuarios::mdlBorrarUsuarios($_POST["borrarUsuarioId"]);
+
+            if ($respuesta){
+
+                ControladorPlantilla::crtLimpiarDatosNavegador();
+                ControladorPlantilla::ctrCambiarPagina("administrar-usuarios", null);
+
+            }
+            return $respuesta;
+        }
+        return false;
+    }
+
+    public static function ctrListarUsuariosPaginados($usuariosPorPagina, $pagina)
+    {
+        $registroInicio = 0;
+        $numeroRegistros = $usuariosPorPagina;
+
+        for ($i = 1; $i < $pagina; $i++){
+            $registroInicio = $registroInicio + $usuariosPorPagina;
+        }
+
+        $respuesta = ModeloUsuarios::mdlObtenerUsuariosPaginados($registroInicio, $numeroRegistros);
+
+        return $respuesta;
+    }
+
     public function ctrIniciarSesion()
     {
         if (isset($_POST["email"])){
@@ -108,20 +142,13 @@ class ControladorUsuarios{
                     $_SESSION["idUsuario"] = $usuario["id"];
                     $_SESSION["tokenUsuario"] = $usuario["token"];
 
-                    echo '
-                      <script>
-                        if (window.history.replaceState){
-                            window.history.replaceState(null, null, window.location.href);
-                        }
-                        
-                        window.location = "contrasenas";
-                      </script>';
+                    ControladorPlantilla::crtLimpiarDatosNavegador();
+                    ControladorPlantilla::ctrCambiarPagina("contrasenas", null);
                 }
                 else {
 
                     echo "<div class=\"alert alert-danger text-center\">Contraseña erronea</div>";
 
-                    // Actualizar numero de intentos fallidos
                     if ($usuario["intentos_fallidos"] < 3){
                         $fallos = $usuario["intentos_fallidos"]+1;
                         $actualizarFallos = ModeloUsuarios::mdlActualizarIntentosFallidos($fallos, $usuario["token"]);
@@ -140,13 +167,7 @@ class ControladorUsuarios{
             }
             else {
 
-
-                echo '
-                      <script>
-                        if (window.history.replaceState){
-                            window.history.replaceState(null, null, window.location.href);
-                        }
-                      </script>';
+                ControladorPlantilla::crtLimpiarDatosNavegador();
 
                 echo "<div class=\"alert alert-danger text-center\">Usuario no encontrado </div>";
 
@@ -155,14 +176,14 @@ class ControladorUsuarios{
     }
 
     // Funcion para validar si un usuario ha iniciado sesion y puede acceder a una paginaadmin
-    public static function ctrUsuarioIniciado(){
+    public static function ctrValidarUsuarioIniciado(){
         if (isset($_SESSION["usuarioIniciado"])) {
             if ($_SESSION["usuarioIniciado"] != "ok"){
-                echo '<script>window.location = "iniciar-sesion";</script>';
+                ControladorPlantilla::ctrCambiarPagina("iniciar-sesion", null);
             }
         }
         else{
-            echo '<script>window.location = "iniciar-sesion";</script>';
+            ControladorPlantilla::ctrCambiarPagina("iniciar-sesion", null);
         }
     }
 }

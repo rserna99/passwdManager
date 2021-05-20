@@ -1,11 +1,11 @@
 <?php
 
 require "Controlador/usuarios.controlador.php";
-ControladorUsuarios::ctrUsuarioIniciado();
+ControladorUsuarios::ctrValidarUsuarioIniciado();
 
 ?>
 
-<h2>Crear contraseñas</h2>
+<h2><i class="fas fa-plus"></i> Crear contraseñas</h2>
 <hr style="width: 98%">
 <br>
 <form method="post">
@@ -43,15 +43,11 @@ require "Controlador/contrasenas.controlador.php";
 $registro = ControladorContrasenas::ctrCrearContrasena();
 
 if ($registro){
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
-    //echo '<div class="alert alert-success" role="alert">Contraseña almacenada</div>';
-    echo '<script>window.location = "contrasenas"</script>';
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
+    ControladorPlantilla::ctrCambiarPagina("contrasenas", null);
+
 }
-else
 
 
 ?>

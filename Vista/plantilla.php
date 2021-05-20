@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+require_once "Controlador/plantillas.controlador.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -39,32 +42,10 @@ session_start();
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="menu">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav">
 
             <?php
-            if (isset($_SESSION["usuarioIniciado"]) && $_SESSION["usuarioIniciado"] == "ok")
-            {
-                echo '<li class="navbar-item">';
-                echo '<a title="Contraseñas" href="contrasenas" class="nav-link">Contraseñas <i class="fas fa-key"></i></a>';
-                echo '</li>';
-
-                echo '<li class="navbar-item">';
-                echo '<a title="Editar usuario" href="index.php?pagina=editar-usuario&token=' . $_SESSION["tokenUsuario"] .'" class="nav-link">Editar usuario <i class="fas fa-user-edit"></i></a>';
-                echo '</li>';
-
-                echo '<li class="navbar-item">';
-                echo '<a title="Cerrar sesion" href="salir" class="nav-link">Cerrar sesion <i class="fas fa-sign-out-alt"></i></a>';
-                echo '</li>';
-            }
-            else {
-                echo '<li class="navbar-item">';
-                echo '<a title="Registrar usuario" href="registro" class="nav-link">Registro <i class="fas fa-user-plus"></i></a>';
-                echo '</li>';
-
-                echo '<li class="navbar-item">';
-                echo '<a title="Iniciar sesion" href="iniciar-sesion" class="nav-link">Iniciar sesión <i class="fas fa-sign-in-alt"></i></a>';
-                echo '</li>';
-            }
+                ControladorPlantilla::ctrCrearEnlacesNavbar();
             ?>
         </ul>
     </div>
@@ -88,6 +69,21 @@ session_start();
                 break;
             case "editar-usuario":
                 include "Vista/paginas/usuarios/editar_usuario.php";
+                break;
+            case "administrar-usuarios":
+                include "Vista/paginas/usuarios/admin_usuarios.php";
+                break;
+            case "administrar-grupos":
+                include "Vista/paginas/grupos/admin-grupos.php";
+                break;
+            case "crear-rol":
+                include "Vista/paginas/roles/crear_rol.php";
+                break;
+            case "crear-grupo":
+                include "Vista/paginas/grupos/crear-grupo.php";
+                break;
+            case "editar-grupo":
+                include "Vista/paginas/grupos/editar-grupo.php";
                 break;
             case "contrasenas":
                 include "Vista/paginas/contrasenas/listar_contrasenas.php";

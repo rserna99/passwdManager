@@ -2,4 +2,5 @@
 
 session_destroy();
 
-echo '<script>window.location = "iniciar-sesion";</script>';
+ControladorPlantilla::ctrCambiarPagina("iniciar-sesion", null);
+

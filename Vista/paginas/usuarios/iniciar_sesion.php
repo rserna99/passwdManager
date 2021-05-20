@@ -1,4 +1,4 @@
-<h2>Iniciar sesión</h2>
+<h2><i class="fas fa-sign-in-alt"></i> Iniciar sesión</h2>
 <hr style="width: 98%;"><br>
 
 <form method="post" class="was-validated">

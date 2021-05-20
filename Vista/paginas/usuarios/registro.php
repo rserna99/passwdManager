@@ -1,4 +1,4 @@
-<h2>Registrar usuario</h2>
+<h2><i class="fas fa-user-plus"></i> Registrar usuario</h2>
 <hr style="width: 98%;"><br>
 
 <form method="post" class="was-validated">
@@ -41,18 +41,13 @@ require "Controlador/usuarios.controlador.php";
 $registro = ControladorUsuarios::ctrRegistrarUsuario();
 
 if ($registro == "ok"){
-    echo "<script>
-        if (window.history.replaceState){
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>";
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
+
     echo '<div class="alert alert-success" role="alert">Usuario registrado</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "iniciar-sesion";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina("iniciar-sesion", 800);
+
 }
 else if (str_contains($registro, "error")) {
     echo '<div class="alert alert-danger" role="alert">' . str_replace("error:", "", $registro) .'</div>';

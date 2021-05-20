@@ -110,7 +110,7 @@ Class ModeloUsuarios{
             $consulta->bindParam(":email", $datos["email"]);
             $consulta->bindParam(":contrasena", $datos["contrasena"]);
             $consulta->bindParam(":fecha_modificacion", $date);
-            $consulta->bindParam(":token", $_SESSION["tokenUsuario"]);
+            $consulta->bindParam(":token", $datos["token"]);
 
 
             if ($consulta->execute())
@@ -134,7 +134,7 @@ Class ModeloUsuarios{
             $consulta->bindParam(":nombre", $datos["nombre"]);
             $consulta->bindParam(":email", $datos["email"]);
             $consulta->bindParam(":fecha_modificacion", $date);
-            $consulta->bindParam(":token", $_SESSION["tokenUsuario"]);
+            $consulta->bindParam(":token", $datos["token"]);
 
 
             if ($consulta->execute())
@@ -169,6 +169,42 @@ Class ModeloUsuarios{
             $consulta = null;
             return Conexion::conectar()->errorInfo();
         }
+    }
+
+    public static function mdlBorrarUsuarios($token)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "DELETE FROM `usuarios` WHERE token = :token"
+        );
+
+        $consulta->bindParam(":token", $token);
+
+        if ($consulta->execute())
+        {
+            return true;
+        }
+        else {
+
+            $consulta->close();
+            $consulta = null;
+            return Conexion::conectar()->errorInfo();
+        }
+    }
+
+    public static function mdlObtenerUsuariosPaginados($registroInicio, $numeroRegistros)
+    {
+
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT * FROM usuarios LIMIT :registroInicio , :numeroRegistros"
+        );
+        $consulta->bindParam(":registroInicio", $registroInicio, PDO::PARAM_INT);
+        $consulta->bindParam(":numeroRegistros", $numeroRegistros, PDO::PARAM_INT);
+
+        $consulta->execute();
+
+        $resultado = $consulta->fetchAll();
+
+        return $resultado;
     }
 
 

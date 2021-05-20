@@ -1,7 +1,7 @@
 <?php
 
 require "Controlador/usuarios.controlador.php";
-ControladorUsuarios::ctrUsuarioIniciado();
+ControladorUsuarios::ctrValidarUsuarioIniciado();
 
 
 require "Controlador/contrasenas.controlador.php";
@@ -12,7 +12,7 @@ if (isset($_GET["id"])){
 
 ?>
 
-    <h2>Modificar contraseña</h2>
+    <h2><i class="fas fa-edit"></i> Modificar contraseña</h2>
     <hr style="width: 98%">
     <br>
     <form method="post">
@@ -49,18 +49,13 @@ $contrasenas = ControladorContrasenas::ctrListarContrasenas($_SESSION["idUsuario
 $actualizar = ControladorContrasenas::ctrModificarContrasena();
 
 if ($actualizar){
-    echo "<script>
-                        if (window.history.replaceState){
-                            window.history.replaceState(null, null, window.location.href);
-                        }
-                       </script>";
+
+    ControladorPlantilla::crtLimpiarDatosNavegador();
 
     echo '<div class="alert alert-success" role="alert">Contraseña actualizada correctamente</div>';
 
-    echo '<script>
-            setTimeout(function() {
-              window.location = "contrasenas";
-            },800);
-          </script>';
+    ControladorPlantilla::ctrCambiarPagina("contrasenas", 800);
 
 }
+?>
+<br>
