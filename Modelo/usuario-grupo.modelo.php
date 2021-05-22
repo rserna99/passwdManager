@@ -26,7 +26,7 @@ Class UsuarioGrupoModelo{
 
 
         $consulta->execute();
-        return $consulta->fetchAll();
+        return $consulta->fetch();
     }
 
     static public function actualizarUsuarioGrupo($datos){

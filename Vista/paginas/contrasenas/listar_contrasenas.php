@@ -96,7 +96,7 @@ $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($c
                         <input type="text" disabled value="<?php echo $value["usuario"]; ?>" class="form-control" id="usuario-<?php echo $value["token"]?>">
                         <div class="input-group-append">
                             <div class="px-1">
-                                <button title="Copiar al portapapeles" onclick='copiarUsuario(<?php echo '"' . $value["token"] . '"'; ?>)' id="copiar_usuario-<?php echo $value["token"]; ?>" class="btn btn-outline-primary"><i class="fas fa-clipboard"></i></button>
+                                <button title="Copiar al portapapeles" onclick='copiarUsuario(<?php echo '"' . $value["token"] . '"'; ?>)' id="copiar_usuario-<?php echo $value["token"]; ?>" class="btn btn-outline-info"><i class="fas fa-clipboard"></i></button>
                             </div>
                         </div>
                 </td>
@@ -108,7 +108,7 @@ $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($c
                                 <button title="Mostrar contraseña" onclick='mostrarContrasena(<?php echo '"' . $value["token"] . '"'; ?>)' class="btn btn-outline-secondary"><i id="mostrar_contrasena-<?php echo $value["token"]; ?>" class="fas fa-eye"></i></button>
                             </div>
                             <div class="px-1">
-                                <button title="Copiar al portapapeles" onclick='copiarContrasena(<?php echo '"' . $value["token"] . '"'; ?>)' id="copiar_contrasena-<?php echo $value["token"]; ?>" class="btn btn-outline-primary"><i class="fas fa-clipboard"></i></button>
+                                <button title="Copiar al portapapeles" onclick='copiarContrasena(<?php echo '"' . $value["token"] . '"'; ?>)' id="copiar_contrasena-<?php echo $value["token"]; ?>" class="btn btn-outline-info"><i class="fas fa-clipboard"></i></button>
                             </div>
                         </div>
                 </td>

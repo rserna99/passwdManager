@@ -28,15 +28,16 @@ Class ModeloRoles{
 
             $consulta->bindParam(":id", $id, PDO::PARAM_INT);
 
-            return $consulta->execute();
+            $consulta->execute();
+            return $consulta->fetch();
 
         }
         else {
             $consulta = Conexion::conectar()->prepare(
                 "SELECT * FROM roles"
             );
-
-            return $consulta->execute();
+            $consulta->execute();
+            return $consulta->fetchAll();
         }
     }
 }
