@@ -2,6 +2,7 @@
 
 require_once "Controlador/usuarios.controlador.php";
 require_once "Controlador/grupos.controlador.php";
+require_once "Controlador/contrasena-compartida.controlador.php";
 
 $usuarios = ControladorUsuarios::ctrListarUsuarios();
 $grupos = ControladorGrupos::ctrListarGrupos(null);
@@ -9,12 +10,20 @@ $grupos = ControladorGrupos::ctrListarGrupos(null);
 
 $target =(isset($_POST["tipo"]))? $_POST["tipo"] : null;
 $tokens = Array();
+$tokenContrasena = $_GET["id"];
 
 foreach ($_POST as $key=>$dato){
     if ($key != "tipo")
         array_push($tokens, $dato);
 }
 
+// Compartir contrasenas
+if ($target != null && $target == "usuarios"){
+    ControladorContrasenaCompartida::ctrCompartirContrasena($tokenContrasena, $tokens, null);
+}
+elseif ($target != null && $target == "grupos") {
+    ControladorContrasenaCompartida::ctrCompartirContrasena($tokenContrasena, null, $tokens);
+}
 
 ?>
 
@@ -75,6 +84,5 @@ foreach ($_POST as $key=>$dato){
 <br>
 <div class="row">
     <a class="btn btn-secondary col-sm-2 offset-sm-5" href="contrasenas">Volver</a>
-
 </div>
 <br>
