@@ -44,70 +44,22 @@ require_once "Controlador/plantillas.controlador.php";
     <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav">
 
-            <?php
-                ControladorPlantilla::ctrCrearEnlacesNavbar();
-            ?>
+            <?php ControladorPlantilla::ctrCrearEnlacesNavbar(); ?>
         </ul>
     </div>
 </nav>
 
 <br>
 
-<div class="container" id="contenido">
-    <br>
-    <?php
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-11 col-lg-9" id="contenido">
+            <br>
+            <?php ControladorPlantilla::ctrWhiteList(); ?>
+        </div>
+    </div>
+</div>
 
-    if (isset($_GET["pagina"])) {
-
-        switch ($_GET["pagina"]) {
-
-            case "registro":
-                include "Vista/paginas/usuarios/registro.php";
-                break;
-            case "iniciar-sesion":
-                include "Vista/paginas/usuarios/iniciar_sesion.php";
-                break;
-            case "editar-usuario":
-                include "Vista/paginas/usuarios/editar_usuario.php";
-                break;
-            case "administrar-usuarios":
-                include "Vista/paginas/usuarios/admin_usuarios.php";
-                break;
-            case "administrar-grupos":
-                include "Vista/paginas/grupos/admin-grupos.php";
-                break;
-            case "crear-rol":
-                include "Vista/paginas/roles/crear_rol.php";
-                break;
-            case "crear-grupo":
-                include "Vista/paginas/grupos/crear-grupo.php";
-                break;
-            case "editar-grupo":
-                include "Vista/paginas/grupos/editar-grupo.php";
-                break;
-            case "contrasenas":
-                include "Vista/paginas/contrasenas/listar_contrasenas.php";
-                break;
-            case "nueva-contrasena":
-                include "Vista/paginas/contrasenas/crear_contrasena.php";
-                break;
-            case "editar-contrasena":
-                include "Vista/paginas/contrasenas/editar_contrasenas.php";
-                break;
-            case "salir":
-                include "Vista/paginas/usuarios/salir.php";
-                break;
-            default:
-                include "Vista/paginas/error404.php";
-                break;
-
-        }
-    }
-    else {
-        include "Vista/paginas/usuarios/iniciar_sesion.php";
-    }
-
-    ?>
 </div>
 </body>
 <script rel="script" src='Vista/js/contrasenas.js'></script>

@@ -28,49 +28,54 @@ $usuariosPaginados = $controladorUsuarios::ctrListarUsuariosPaginados($usuariosP
 <hr style="width: 98%;"><br>
 <br>
 
-<div class="col-10">
-    <a class="btn btn-primary" title="Añadir usuario" href="registro"><i class="fas fa-user-plus"></i> Añadir usuario </a>
+
+<div class="row">
+    <div class="col-10">
+        <a class="btn btn-primary" title="Añadir usuario" href="registro"><i class="fas fa-user-plus"></i> Añadir usuario </a>
+    </div>
 </div>
+
+
 <br>
-<table class="table table-striped table-responsive">
-    <thead>
-    <tr>
-        <th scope="col">Token</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Email</th>
-        <th scope="col">Fecha registro</th>
-        <th scope="col">Fecha modificacion</th>
-        <th scope="col">Acciones </th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($usuariosPaginados as $key => $usuario): ?>
-    <tr>
-        <td><?php echo $usuario["token"]; ?></td>
-        <td><?php echo $usuario["nombre"]; ?></td>
-        <td><?php echo $usuario["email"]; ?></td>
-        <td><?php echo $usuario["fecha_registro"]; ?></td>
-        <td><?php echo $usuario["fecha_modificacion"]; ?></td>
-        <td>
-            <div class="btn-group">
-                <div class="px-1">
-                    <a title="Editar usuario" href="index.php?pagina=editar-usuario&token=<?php echo $usuario["token"]; ?>" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
-                </div>
-                <form method="post">
-                    <input type="hidden" value="<?php echo $usuario["token"]; ?>" name="borrarUsuarioId">
-                    <button title="Borrar usuario" type="submit" class="btn btn-danger"><i class="fas fa-user-minus"></i></i></button>
+<div>
+    <table class="table table-responsive w-100 d-block d-md-table table-striped">
+        <thead>
+        <tr>
+            <th class="text-center">Token</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Fecha registro</th>
+            <th class="text-center">Acciones </th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($usuariosPaginados as $key => $usuario): ?>
+            <tr>
+                <td><?php echo $usuario["token"]; ?></td>
+                <td><?php echo $usuario["nombre"]; ?></td>
+                <td><?php echo $usuario["email"]; ?></td>
+                <td><?php echo $usuario["fecha_registro"]; ?></td>
+                <td>
+                    <div class="btn-group">
+                        <div class="px-1">
+                            <a title="Editar usuario" href="index.php?pagina=editar-usuario&token=<?php echo $usuario["token"]; ?>" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
+                        </div>
+                        <form method="post">
+                            <input type="hidden" value="<?php echo $usuario["token"]; ?>" name="borrarUsuarioId">
+                            <button title="Borrar usuario" type="submit" class="btn btn-danger"><i class="fas fa-user-minus"></i></i></button>
 
-                    <?php
-                    $eliminar = $controladorUsuarios::ctrBorrarUsuario();
+                            <?php
+                            $eliminar = $controladorUsuarios::ctrBorrarUsuario();
 
-                    ?>
-                </form>
-            </div>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
+                            ?>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 <?php
 
 if ($numeroPaginas > 1){

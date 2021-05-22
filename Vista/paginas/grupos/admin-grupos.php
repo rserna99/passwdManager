@@ -31,7 +31,7 @@ $gruposPaginados =  ControladorGrupos::ctrListarUsuariosPaginados($usuariosPorPa
     <a class="btn btn-primary" title="Añadir usuario" href="crear-grupo"><i class="fas fa-user-plus"></i> Añadir grupo </a>
 </div>
 <br>
-<table class="table table-striped w-100">
+<table class="table table-responsive w-100 d-block d-md-table table-striped">
     <thead>
     <tr>
         <th scope="col">Nombre</th>
@@ -49,13 +49,13 @@ $gruposPaginados =  ControladorGrupos::ctrListarUsuariosPaginados($usuariosPorPa
             <?php
 
             $usuariosDelGrupo = UsuarioGrupoControlador::ctrObtenerUsuariosDelGrupo($grupo["token"]);
-
+            $num = count($usuariosDelGrupo);
             echo "<ul>";
 
-            if (count($usuariosDelGrupo) >= 1)
-                foreach ($usuariosDelGrupo as $usuario){
+            if ($num >= 1)
+                foreach ($usuariosDelGrupo as $usuario)
                     echo "<li>" . $usuario["nombre"] . "</li>";
-                }
+
 
             else
                 echo "<li>Sin usuarios</li>";

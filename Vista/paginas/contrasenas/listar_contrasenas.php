@@ -69,8 +69,8 @@ $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($c
 </div>
 
 <br>
-<div class="table-responsive">
-    <table class="table table-striped ">
+<div>
+    <table class="table table-responsive w-100 d-block d-md-table table-striped">
         <thead>
         <tr>
             <th class="text-center">Servicio</th>
@@ -127,6 +127,9 @@ $contrasenasPaginadas = ControladorContrasenas::ctrListarContrasenasPaginadas($c
                             ?>
 
                         </form>
+                        <div class="px-1">
+                            <a title="Compartir contraseña" href="index.php?pagina=compartir-contrasena&id=<?php echo $value["token"]?>" class="btn btn-primary"><i class="fas fa-share-alt"></i></a>
+                        </div>
                     </div>
                 </td>
             </tr>

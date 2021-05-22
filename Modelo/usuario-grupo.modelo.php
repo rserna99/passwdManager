@@ -25,7 +25,8 @@ Class UsuarioGrupoModelo{
         $consulta->bindParam(":token_grupo", $datos["token_grupo"], PDO::PARAM_STR);
 
 
-        return $consulta->execute();
+        $consulta->execute();
+        return $consulta->fetchAll();
     }
 
     static public function actualizarUsuarioGrupo($datos){
@@ -62,7 +63,8 @@ Class UsuarioGrupoModelo{
 
         $consulta->bindParam(":token_grupo", $token_grupo, PDO::PARAM_STR);
 
-        return $consulta->execute();
+        $consulta->execute();
+        return $consulta->fetchAll();
     }
 
 }
