@@ -4,7 +4,7 @@ require_once "Modelo/conexion.php";
 
 Class UsuarioGrupoModelo{
 
-    static public function anadirUsuarioGrupo($datos){
+    static public function mdlAnadirUsuarioGrupo($datos){
         $consulta = Conexion::conectar()->prepare(
             "INSERT INTO `usuario-grupo` (token_usuario, token_grupo, token_rol) VALUES (:token_usuario, :token_grupo, :token_rol)"
         );
@@ -16,7 +16,7 @@ Class UsuarioGrupoModelo{
         return $consulta->execute();
     }
 
-    static public function obtenerUsuaioGrupo($datos){
+    static public function mdlObtenerUsuaioGrupo($datos){
         $consulta = Conexion::conectar()->prepare(
             "SELECT * FROM `usuario-grupo` WHERE token_usuario = :token_usuario AND token_grupo = :token_grupo"
         );
@@ -29,7 +29,7 @@ Class UsuarioGrupoModelo{
         return $consulta->fetch();
     }
 
-    static public function actualizarUsuarioGrupo($datos){
+    static public function mdlActualizarUsuarioGrupo($datos){
 
         $consulta = Conexion::conectar()->prepare(
             "UPDATE `usuario-grupo` SET token_rol = :token_rol  WHERE token_usuario = :token_usuario AND token_grupo = :token_grupo"
@@ -44,7 +44,7 @@ Class UsuarioGrupoModelo{
 
     }
 
-    static public function borrarUsuarioGrupo($datos){
+    static public function mdlBorrarUsuarioGrupo($datos){
         $consulta = Conexion::conectar()->prepare(
             "DELETE FROM `usuario-grupo`WHERE token_usuario = :token_usuario AND token_grupo = :token_grupo"
         );

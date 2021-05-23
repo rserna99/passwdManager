@@ -19,7 +19,7 @@ Class UsuarioGrupoControlador{
                 "token_grupo" => $_POST["token_grupo"]
             );
 
-            UsuarioGrupoModelo::borrarUsuarioGrupo($datos);
+            UsuarioGrupoModelo::mdlBorrarUsuarioGrupo($datos);
             //ControladorPlantilla::ctrActualizarPagina();
         }
         else {
@@ -30,7 +30,7 @@ Class UsuarioGrupoControlador{
                 "token_rol" => $rol["token"]
             );
 
-            $usuarioGrupo = UsuarioGrupoModelo::obtenerUsuaioGrupo($datos);
+            $usuarioGrupo = UsuarioGrupoModelo::mdlObtenerUsuaioGrupo($datos);
 
             // Actualizar
             if ($usuarioGrupo != null){
@@ -39,7 +39,7 @@ Class UsuarioGrupoControlador{
 
                 else {
                     echo '<script>alert("Actualizar rol del usuario")</script>';
-                    UsuarioGrupoModelo::actualizarUsuarioGrupo($datos);
+                    UsuarioGrupoModelo::mdlActualizarUsuarioGrupo($datos);
                     //ControladorUtilidades::ctrActualizarPagina();
                 }
             }
@@ -47,7 +47,7 @@ Class UsuarioGrupoControlador{
             else
             {
                 echo '<script>alert("Añadir usuario al grupo")</script>';
-                UsuarioGrupoModelo::anadirUsuarioGrupo($datos);
+                UsuarioGrupoModelo::mdlAnadirUsuarioGrupo($datos);
                 //ControladorUtilidades::ctrActualizarPagina();
             }
         }
@@ -63,7 +63,7 @@ Class UsuarioGrupoControlador{
             "token_grupo" => $token_grupo,
         );
 
-        $usuarioGrupo = UsuarioGrupoModelo::obtenerUsuaioGrupo($datos);
+        $usuarioGrupo = UsuarioGrupoModelo::mdlObtenerUsuaioGrupo($datos);
 
         return $usuarioGrupo;
     }
