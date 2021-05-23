@@ -74,4 +74,10 @@ Class UsuarioGrupoControlador{
         return $usuariosDelGrupo;
     }
 
+    static public function ctrObtenerGruposDelUsuario($token_usuario){
+        $usuariosDelGrupo = UsuarioGrupoModelo::mdlObtenerGruposDelUsuario($token_usuario);
+
+        return $usuariosDelGrupo;
+    }
+
 }

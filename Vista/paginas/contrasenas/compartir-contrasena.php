@@ -3,11 +3,13 @@
 require_once "Controlador/usuarios.controlador.php";
 require_once "Controlador/contrasenas.controlador.php";
 require_once "Controlador/grupos.controlador.php";
+require_once "Controlador/usuario-grupo.controlador.php";
 require_once "Controlador/contrasena-compartida.controlador.php";
 
 $usuarios = ControladorUsuarios::ctrListarUsuarios();
-$grupos = ControladorGrupos::ctrListarGrupos(null);
 
+//$grupos = ControladorGrupos::ctrListarGrupos(null);
+$grupos = UsuarioGrupoControlador::ctrObtenerGruposDelUsuario($_SESSION["tokenUsuario"]);
 
 $target =(isset($_POST["tipo"]))? $_POST["tipo"] : null;
 $tokens = Array();
@@ -86,7 +88,7 @@ elseif ($target != null && $target == "grupos") {
                 <?php foreach ($grupos as $key=>$grupo) : ?>
                     <?php
 
-                    $contrasenaCompartida = ControladorContrasenaCompartida::ctrObtenerContrasenaCompartida($tokenContrasena, null, $grupo["token"]);
+                    $contrasenaCompartida = ControladorContrasenaCompartida::ctrObtenerContrasenaCompartida($tokenContrasena, null, $grupo["token_grupo"]);
 
 
                     if ((isset($contrasenaCompartida["token_grupo"])) && $grupo["token"] == $contrasenaCompartida["token_grupo"]){
@@ -101,7 +103,7 @@ elseif ($target != null && $target == "grupos") {
                         <td><?php echo $grupo["nombre"]; ?></td>
                         <td>
                             <input type="hidden" name="borrar-grupo-<?php echo $key; ?>" value="false">
-                            <input name="compartir-grupo-<?php echo $key; ?>" value="<?php echo $grupo["token"]; ?>" type="checkbox" <?php echo $check; ?>>
+                            <input name="compartir-grupo-<?php echo $key; ?>" value="<?php echo $grupo["token_grupo"]; ?>" type="checkbox" <?php echo $check; ?>>
                         </td>
                     </tr>
                 <?php endforeach; ?>

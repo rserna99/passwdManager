@@ -67,4 +67,16 @@ Class UsuarioGrupoModelo{
         return $consulta->fetchAll();
     }
 
+    public static function mdlObtenerGruposDelUsuario($token_usuario)
+    {
+        $consulta = Conexion::conectar()->prepare(
+            "SELECT ug.token_usuario, ug.token_grupo, g.nombre FROM `usuario-grupo` AS ug INNER JOIN grupos AS g WHERE ug.token_grupo = g.token AND token_usuario = :token_usuario"
+        );
+
+        $consulta->bindParam(":token_usuario", $token_usuario, PDO::PARAM_STR);
+
+        $consulta->execute();
+        return $consulta->fetchAll();
+    }
+
 }
