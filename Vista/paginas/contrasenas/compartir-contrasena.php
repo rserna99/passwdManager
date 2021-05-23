@@ -1,6 +1,7 @@
 <?php
 
 require_once "Controlador/usuarios.controlador.php";
+require_once "Controlador/contrasenas.controlador.php";
 require_once "Controlador/grupos.controlador.php";
 require_once "Controlador/contrasena-compartida.controlador.php";
 
@@ -11,6 +12,9 @@ $grupos = ControladorGrupos::ctrListarGrupos(null);
 $target =(isset($_POST["tipo"]))? $_POST["tipo"] : null;
 $tokens = Array();
 $tokenContrasena = $_GET["id"];
+$contrasena = ControladorContrasenas::ctrListarContrasenas($tokenContrasena);
+
+print_r($contrasena);
 
 foreach ($_POST as $key=>$dato){
     if ($key != "tipo")
@@ -51,11 +55,15 @@ elseif ($target != null && $target == "grupos") {
                 $check = ((isset($contrasenaCompartida["token_usuario"])) && $usuario["token"] == $contrasenaCompartida["token_usuario"])? "checked" : "";
 
                 ?>
-
+                <?php if ($usuario["token"] != $contrasena[0]["token_usuario"]) : ?>
                     <tr>
                         <td><?php echo $usuario["nombre"]; ?></td>
-                        <td><input name="compartir-usuario-<?php echo $key; ?>" value="<?php echo $usuario["token"]; ?>" type="checkbox" <?php echo $key; ?>" <?php echo $check; ?>></td>
+                        <td>
+                            <input type="hidden" name="borrar-ususrio-<?php echo $key; ?>" value="false">
+                            <input name="compartir-usuario-<?php echo $key; ?>" value="<?php echo $usuario["token"]; ?>" type="checkbox" <?php echo $key; ?>" <?php echo $check; ?>>
+                        </td>
                     </tr>
+                <?php endif; ?>
                 <?php endforeach; ?>
                 </tbody>
             </table>
@@ -80,12 +88,21 @@ elseif ($target != null && $target == "grupos") {
 
                     $contrasenaCompartida = ControladorContrasenaCompartida::ctrObtenerContrasenaCompartida($tokenContrasena, null, $grupo["token"]);
 
+
+                    if ((isset($contrasenaCompartida["token_grupo"])) && $grupo["token"] == $contrasenaCompartida["token_grupo"]){
+
+                    }
+
+
                     $check = ((isset($contrasenaCompartida["token_grupo"])) && $grupo["token"] == $contrasenaCompartida["token_grupo"])? "checked" : "";
 
                     ?>
                     <tr>
                         <td><?php echo $grupo["nombre"]; ?></td>
-                        <td><input name="compartir-grupo-<?php echo $key; ?>" value="<?php echo $grupo["token"]; ?>" type="checkbox" <?php echo $check; ?>></td>
+                        <td>
+                            <input type="hidden" name="borrar-grupo-<?php echo $key; ?>" value="false">
+                            <input name="compartir-grupo-<?php echo $key; ?>" value="<?php echo $grupo["token"]; ?>" type="checkbox" <?php echo $check; ?>>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
